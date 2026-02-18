@@ -1,4 +1,5 @@
 <script>
+  import { base } from '$app/paths';
   import { products } from '$lib/data/products.js';
   import { activeProductIndex } from '$lib/stores/spotlight.js';
   import { mobileProductDrawerOpen } from '$lib/stores/mobileDrawer.js';
@@ -30,7 +31,7 @@
             >
               <div class="product-image" aria-hidden="true">
                 {#if product.image}
-                  <img src={product.image} alt="" width="280" height="160" />
+                  <img src={base ? `${base}/${product.image}` : `/${product.image}`} alt="" width="280" height="160" />
                 {:else}
                   <span class="product-initial">{product.name.charAt(0)}</span>
                 {/if}

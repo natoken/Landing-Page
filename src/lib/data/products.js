@@ -5,7 +5,7 @@ export const products = [
     description: 'A Game Modding Publishing Platform with a focus on creator health and support.',
     status: 'live',
     url: 'https://runeforge.dev',
-    image: '/Ignis.webp'
+    image: 'Ignis.webp'
   },
   {
     name: 'Taledom.com',

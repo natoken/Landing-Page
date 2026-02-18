@@ -1,4 +1,5 @@
 <script>
+  import { base } from '$app/paths';
   import { fly } from 'svelte/transition';
 
   /** @type {{ name: string; description: string; status: string; url?: string; image?: string }[]} */
@@ -14,7 +15,7 @@
         <div class="spotlight-inner" in:fly={{ y: -16, duration: 250 }} out:fly={{ y: 16, duration: 200 }}>
           <div class="spotlight-image" aria-hidden="true">
           {#if product.image}
-            <img src={product.image} alt="" width="360" height="200" />
+            <img src={base ? `${base}/${product.image}` : `/${product.image}`} alt="" width="360" height="200" />
           {:else}
             <span class="spotlight-initial">{product.name.charAt(0)}</span>
           {/if}
