@@ -1,14 +1,8 @@
 <script>
   import '../app.css';
-  import { tick, onMount } from 'svelte';
-  import ProductDrawer from '$lib/components/ProductDrawer.svelte';
-  import LeftPanelContent from '$lib/components/LeftPanelContent.svelte';
-  import CenterPanelContent from '$lib/components/CenterPanelContent.svelte';
-  import RightPanelContent from '$lib/components/RightPanelContent.svelte';
+  import { onMount } from 'svelte';
   import NatokenLogo from '$lib/components/NatokenLogo.svelte';
-  import { products } from '$lib/data/products.js';
-  import { activeProductIndex } from '$lib/stores/spotlight.js';
-  import { activeMobilePanel } from '$lib/stores/mobilePanel.js';
+  import NodeInfoPanel from '$lib/components/NodeInfoPanel.svelte';
 
   let { children } = $props();
 
@@ -20,14 +14,6 @@
     });
   });
 
-  $effect(() => {
-    $activeMobilePanel;
-    tick().then(() => {
-      document.querySelectorAll('.panel-scroll').forEach((el) => {
-        el.scrollTop = 0;
-      });
-    });
-  });
 </script>
 
 {#if ConstellationScene}
@@ -45,103 +31,29 @@
     </div>
   </div>
 
-  <!-- Mobile: header with panel switcher -->
-  <header class="mobile-header" aria-label="Panel navigation">
-    <button
-      type="button"
-      class="mobile-tab"
-      class:active={$activeMobilePanel === 'left'}
-      onclick={() => activeMobilePanel.set('left')}
-      aria-label="Open left panel"
-      aria-pressed={$activeMobilePanel === 'left'}
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M12 16v-4M12 8h.01"/>
-      </svg>
-      <span>About</span>
-    </button>
-    <button
-      type="button"
-      class="mobile-tab"
-      class:active={$activeMobilePanel === 'center'}
-      onclick={() => activeMobilePanel.set('center')}
-      aria-label="Open middle panel"
-      aria-pressed={$activeMobilePanel === 'center'}
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-      </svg>
-      <span>Team</span>
-    </button>
-    <button
-      type="button"
-      class="mobile-tab"
-      class:active={$activeMobilePanel === 'right'}
-      onclick={() => activeMobilePanel.set('right')}
-      aria-label="Open right panel"
-      aria-pressed={$activeMobilePanel === 'right'}
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="3" y="3" width="7" height="7"/>
-        <rect x="14" y="3" width="7" height="7"/>
-        <rect x="14" y="14" width="7" height="7"/>
-        <rect x="3" y="14" width="7" height="7"/>
-      </svg>
-      <span>Products</span>
-    </button>
-  </header>
-
-  <div class="layout-grid">
-    <!-- Left panel -->
-    <div class="panel panel-left" class:visible={$activeMobilePanel === 'left'}>
-      <div class="panel-scroll">
-        <LeftPanelContent />
-      </div>
-    </div>
-
-    <!-- Center column (hidden on mobile when not active) -->
-    <div class="center-column" class:visible={$activeMobilePanel === 'center'}>
-      <div class="panel panel-center" class:visible={$activeMobilePanel === 'center'}>
-        <div class="panel-scroll">
-          <CenterPanelContent />
-        </div>
-      </div>
-    </div>
-
-    <!-- Right panel (hidden on mobile when not active) -->
-    <div class="panel panel-right" class:visible={$activeMobilePanel === 'right'}>
-      <div class="panel-scroll">
-        <RightPanelContent />
-      </div>
-    </div>
-  </div>
-
-  <ProductDrawer products={products} activeIndex={$activeProductIndex} />
   {@render children()}
+
+  <footer class="site-footer">
+    <p>© {new Date().getFullYear()} Natoken LLC</p>
+  </footer>
 </div>
+
+<NodeInfoPanel />
 
 <style>
   .layout {
     position: relative;
     z-index: 1;
-    height: 100vh;
-    padding: 12px;
-    padding-top: 0;
-    overflow: hidden;
-    box-sizing: border-box;
+    pointer-events: none;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding-top: 0.35rem;
   }
 
   .layout-top {
     flex-shrink: 0;
-    padding-top: 0.35rem;
-    margin-bottom: 0.25rem;
-    display: flex;
-    justify-content: center;
+    pointer-events: none;
   }
 
   .site-brand {
@@ -185,163 +97,20 @@
     color: var(--color-accent);
   }
 
-  .mobile-header {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    margin-bottom: 0.5rem;
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
-    border-radius: 9999px;
-    box-shadow: 0 1px 0 var(--color-border);
-  }
-
-  .mobile-tab {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 1rem;
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-text-muted);
-    background: transparent;
-    border: none;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .mobile-tab:hover {
-    color: var(--color-text);
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  .mobile-tab.active {
-    color: #fff;
-    background: var(--color-accent);
-    box-shadow: 0 0 0 1px rgba(237, 0, 73, 0.4);
-  }
-
-  .layout-grid {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .center-column {
-    position: relative;
-    display: none;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
-  }
-
-  .center-column.visible {
-    display: flex;
-  }
-
-  .panel-center {
+  .site-footer {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
+    pointer-events: none;
+    text-align: center;
   }
 
-  .panel {
-    display: none;
-    flex: 1;
-    min-height: 0;
-    flex-direction: column;
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px var(--glass-border);
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    background-image: linear-gradient(
-      135deg,
-      rgba(237, 0, 73, 0.06) 0%,
-      rgba(237, 0, 73, 0.02) 25%,
-      transparent 50%,
-      transparent 75%,
-      rgba(237, 0, 73, 0.03) 100%
-    );
-  }
-
-  .panel.visible {
-    display: flex;
-  }
-
-  .panel-scroll {
-    flex: 1;
-    min-height: 0;
-    min-width: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-border-strong) transparent;
-  }
-
-  .panel-scroll::-webkit-scrollbar {
-    width: 2px;
-  }
-
-  .panel-scroll::-webkit-scrollbar:vertical {
-    width: 2px;
-  }
-
-  .panel-scroll::-webkit-scrollbar:horizontal {
-    height: 2px;
-  }
-
-  .panel-scroll::-webkit-scrollbar-track,
-  .panel-scroll::-webkit-scrollbar-corner {
-    background: transparent !important;
-  }
-
-  .panel-scroll::-webkit-scrollbar-thumb {
-    background: var(--color-border-strong);
-    border-radius: 2px;
-  }
-
-  .panel-scroll::-webkit-scrollbar-thumb:hover {
-    background: var(--color-text-muted);
-  }
-
-  .panel-scroll::-webkit-scrollbar-button {
-    display: none !important;
-    height: 0 !important;
-    width: 0 !important;
-    background: transparent !important;
-  }
-
-  @media (min-width: 960px) {
-    .mobile-header {
-      display: none;
-    }
-
-    .layout-grid {
-      display: grid;
-      grid-template-columns: min(280px, 28vw) 1fr min(320px, 30vw);
-      gap: 12px;
-    }
-
-    .center-column {
-      display: flex !important;
-      grid-column: 2;
-      min-width: 0;
-    }
-
-    .panel {
-      display: flex !important;
-    }
-
+  .site-footer p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    opacity: 0.5;
   }
 </style>
