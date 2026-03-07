@@ -13,7 +13,7 @@
 - **Total Tasks:** 10
 - **Complexity:** 4 Small, 5 Medium, 1 Large (split into subtasks)
 - **Critical Path:** T-001 → T-002 → T-004 → T-005 → T-008 → T-009 → T-010
-- **Progress:** 0 of 10 complete
+- **Progress:** 1 of 10 complete
 
 ## Dependency Graph
 
@@ -49,7 +49,7 @@ T-006 and T-007 can run in parallel after T-002 (data layer ready), but integrat
 
 ### T-001: Install Threlte and Three.js dependencies
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Small
 **Dependencies:** None
 **Parallel:** —
