@@ -48,3 +48,4 @@
 - Project Genesis initialized in Brownfield mode
 - Discovery complete: codebase scan + owner interview. Vision: "Premium Deluxe" company site at natoken.dev. Key decisions: Svelte 5, Cloudflare Pages, #ed0049 brand, innovative frontend, hiring page, Genesis-managed blog.
 - Constitution established: Tech stack locked (Svelte 5, GSAP, Threlte, mdsvex, vanilla CSS). Design language: "Constellation Terminal". Git strategy: feature branches, conventional commits, squash merge, auto-deploy.
+- Design docs created: overview (site map, as-is/to-be, convergence path), design system (full token reference, motion patterns, component patterns), architecture (4-layer rendering pipeline, Threlte scene graph, GSAP integration, build pipeline), content model (all data schemas, relationships, migration plan).
