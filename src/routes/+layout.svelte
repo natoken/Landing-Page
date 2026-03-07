@@ -2,7 +2,6 @@
   import '../app.css';
   import { tick } from 'svelte';
   import ProductDrawer from '$lib/components/ProductDrawer.svelte';
-  import ParticleRenderer from '$lib/components/ParticleRenderer.svelte';
   import LeftPanelContent from '$lib/components/LeftPanelContent.svelte';
   import CenterPanelContent from '$lib/components/CenterPanelContent.svelte';
   import RightPanelContent from '$lib/components/RightPanelContent.svelte';
@@ -13,6 +12,12 @@
 
   let { children } = $props();
 
+  let ConstellationScene = $state(null);
+
+  import('$lib/components/three/ConstellationScene.svelte').then((mod) => {
+    ConstellationScene = mod.default;
+  });
+
   $effect(() => {
     $activeMobilePanel;
     tick().then(() => {
@@ -22,6 +27,10 @@
     });
   });
 </script>
+
+{#if ConstellationScene}
+  <ConstellationScene />
+{/if}
 
 <div class="layout">
   <div class="layout-top">
@@ -97,9 +106,6 @@
         <div class="panel-scroll">
           <CenterPanelContent />
         </div>
-        <div class="particles-desktop">
-          <ParticleRenderer />
-        </div>
       </div>
     </div>
 
@@ -111,17 +117,14 @@
     </div>
   </div>
 
-  <!-- Mobile: single ParticleRenderer at bottom (all panels) -->
-  <div class="particles-mobile">
-    <ParticleRenderer />
-  </div>
-
   <ProductDrawer products={products} activeIndex={$activeProductIndex} />
   {@render children()}
 </div>
 
 <style>
   .layout {
+    position: relative;
+    z-index: 1;
     height: 100vh;
     padding: 12px;
     padding-top: 0;
@@ -188,8 +191,10 @@
     gap: 0.5rem;
     padding: 0.5rem 0.75rem;
     margin-bottom: 0.5rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
     border-radius: 9999px;
     box-shadow: 0 1px 0 var(--color-border);
   }
@@ -253,23 +258,18 @@
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px var(--color-border);
-    background: var(--color-bg);
+    box-shadow: 0 0 0 1px var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     background-image: linear-gradient(
       135deg,
-      rgba(237, 0, 73, 0.08) 0%,
-      rgba(237, 0, 73, 0.03) 25%,
+      rgba(237, 0, 73, 0.06) 0%,
+      rgba(237, 0, 73, 0.02) 25%,
       transparent 50%,
       transparent 75%,
-      rgba(237, 0, 73, 0.04) 100%
+      rgba(237, 0, 73, 0.03) 100%
     );
-  }
-
-  @media (max-width: 959px) {
-    .panel-left {
-      background: var(--color-bg);
-      background-image: none;
-    }
   }
 
   .panel.visible {
@@ -320,29 +320,6 @@
     background: transparent !important;
   }
 
-  .particles-desktop {
-    display: none;
-  }
-
-  .particles-mobile {
-    display: block;
-    position: fixed;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    height: max(32vh, 140px);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .particles-mobile :global(.particles-container) {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-  }
-
   @media (min-width: 960px) {
     .mobile-header {
       display: none;
@@ -364,26 +341,5 @@
       display: flex !important;
     }
 
-    .particles-desktop {
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: max(32vh, 140px);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .particles-desktop :global(.particles-container) {
-      position: absolute;
-      inset: 0;
-      height: 100%;
-      margin-bottom: 0;
-    }
-
-    .particles-mobile {
-      display: none;
-    }
   }
 </style>
