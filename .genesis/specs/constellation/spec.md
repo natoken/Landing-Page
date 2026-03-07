@@ -85,7 +85,7 @@ This is the "atmosphere layer" of the Constellation Terminal design language. It
 
 - **FR-027:** Two product branches are represented near their respective leadership corners: RuneForge is positioned near the CTO corner (top-right), and Taledom is positioned near the CEO corner (top). Their placement can be within the hexagonal ring or near the outer spikes, whichever produces the best visual result.
 - **FR-028:** Product branches are rendered as small clusters or subtle bright regions — distinct from regular stars but not interactive at this stage. They are visually identifiable as "something" but do not display labels or respond to clicks.
-- **FR-029:** The visual structure supports future extension: sub-products (Champion Trials under RuneForge, Arisce under Taledom) and node-graph-style edge connections between parent and child products will be added in later features. The current layout should not preclude this expansion.
+- **FR-029:** The visual structure supports future extension: sub-products (Champion Trials under RuneForge; Arisce linked to both Taledom and RuneForge, as it combines modding/gaming with Taledom's IP and novel lore) and node-graph-style edge connections between parent and child products will be added in later features. The current layout should not preclude this expansion.
 
 ### Persistence & Continuity
 
@@ -135,7 +135,7 @@ This is the "atmosphere layer" of the Constellation Terminal design language. It
 
 - **Team constellation nodes** — Team members as interactive labeled 3D points are a separate feature (Team Constellation). This spec includes the 6 Corners as structural anchors but not full team member interactivity.
 - **Product region clusters with labels and navigation** — Full interactive product regions with labels, click-to-navigate, and sub-product node graphs are a separate feature. This spec includes product branch positioning as visual markers only.
-- **Sub-product connections** — Edge links between RuneForge→Champion Trials and Taledom→Arisce are planned for a future feature when the node graph expands.
+- **Sub-product connections** — Edge links between parent and child products (Champion Trials under RuneForge, Arisce linked to both Taledom and RuneForge) are planned for a future feature when the node graph expands.
 - **Scroll-linked camera movement** — Camera responding to scroll position is part of the GSAP Integration feature. This spec covers only ambient drift.
 - **Interactive star hover effects** — Stars do not respond to mouse interaction in this feature.
 - **GSAP integration** — No GSAP animations are introduced in this feature. The star field uses its own animation loop.
