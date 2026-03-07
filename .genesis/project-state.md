@@ -6,8 +6,8 @@
 
 ## Active Work
 - **Feature:** constellation
-- **Phase:** plan
-- **Progress:** 0 of 0 tasks (not yet decomposed)
+- **Phase:** tasks
+- **Progress:** 0 of 10 tasks complete
 - **Branch:** genesis/002-constellation
 
 ## Completed Features
@@ -56,3 +56,4 @@
 - Spec approved: constellation (replace 2D particle renderer with Threlte 3D star field). Full viewport coverage, depth fog, 500+ stars, camera drift, reduced motion support, 2D fallback, async loading.
 - Spec clarified: 6 Corners (hexagonal leadership anchors), product branches (RuneForge near CTO, Taledom near CEO), tiered star counts, glass panels, route persistence.
 - Plan approved: constellation. 6 new components, 3 stores, 12-step build order. Threlte + Three.js lazy-loaded (~165KB). InstancedMesh for stars, shader twinkle, Three.js Fog.
+- Tasks decomposed: 10 tasks (4 small, 5 medium, 1 large). Critical path: T-001 → T-002 → T-004 → T-005 → T-008 → T-009 → T-010. T-003/T-006/T-007 parallelizable.
