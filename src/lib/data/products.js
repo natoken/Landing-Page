@@ -11,6 +11,7 @@
  *   children: string[];
  *   bridges?: string[];
  *   type?: 'product' | 'tool';
+ *   mascot?: { name: string; image?: string };
  * }} Product
  */
 
@@ -24,7 +25,8 @@ export const products = [
     url: 'https://runeforge.dev',
     image: 'Ignis.webp',
     parentCorner: 'cto',
-    children: ['champion-trials']
+    children: ['champion-trials'],
+    mascot: { name: 'Ignis' }
   },
   {
     slug: 'taledom',
@@ -34,7 +36,8 @@ export const products = [
     url: 'https://taledom.com',
     image: undefined,
     parentCorner: 'ceo',
-    children: ['breaking-worlds', 'minos-journey', 'tower-of-heavens']
+    children: ['breaking-worlds', 'minos-journey', 'tower-of-heavens'],
+    mascot: { name: 'Inky' }
   },
   {
     slug: 'breaking-worlds',
@@ -45,7 +48,8 @@ export const products = [
     image: undefined,
     parent: 'taledom',
     parentCorner: undefined,
-    children: []
+    children: [],
+    mascot: { name: 'Kyuro' }
   },
   {
     slug: 'minos-journey',
@@ -56,7 +60,8 @@ export const products = [
     image: undefined,
     parent: 'taledom',
     parentCorner: undefined,
-    children: []
+    children: [],
+    mascot: { name: 'Mino' }
   },
   {
     slug: 'tower-of-heavens',
