@@ -34,6 +34,61 @@ export const products = [
     url: 'https://taledom.com',
     image: undefined,
     parentCorner: 'ceo',
+    children: ['breaking-worlds', 'minos-journey', 'tower-of-heavens']
+  },
+  {
+    slug: 'breaking-worlds',
+    name: 'Breaking Worlds',
+    description: 'A Dark Psychological Fantasy novel.',
+    status: 'in-development',
+    url: undefined,
+    image: undefined,
+    parent: 'taledom',
+    parentCorner: undefined,
+    children: []
+  },
+  {
+    slug: 'minos-journey',
+    name: "Mino's Journey",
+    description: 'A novel published on Taledom.',
+    status: 'in-development',
+    url: undefined,
+    image: undefined,
+    parent: 'taledom',
+    parentCorner: undefined,
+    children: []
+  },
+  {
+    slug: 'tower-of-heavens',
+    name: 'Tower of Heavens',
+    description: 'A novel series of two sister stories progressing together with different main characters.',
+    status: 'in-development',
+    url: undefined,
+    image: undefined,
+    parent: 'taledom',
+    parentCorner: undefined,
+    children: ['eyes-of-abyss', 'eyes-of-dawn']
+  },
+  {
+    slug: 'eyes-of-abyss',
+    name: 'The Eyes of Abyss',
+    description: 'A sister novel in the Tower of Heavens series.',
+    status: 'in-development',
+    url: undefined,
+    image: undefined,
+    parent: 'tower-of-heavens',
+    parentCorner: undefined,
+    children: []
+  },
+  {
+    slug: 'eyes-of-dawn',
+    name: 'The Eyes of Dawn',
+    description: 'A sister novel in the Tower of Heavens series.',
+    status: 'in-development',
+    url: undefined,
+    image: undefined,
+    parent: 'tower-of-heavens',
+    parentCorner: undefined,
     children: []
   },
   {
