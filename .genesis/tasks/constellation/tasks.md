@@ -13,7 +13,7 @@
 - **Total Tasks:** 10
 - **Complexity:** 4 Small, 5 Medium, 1 Large (split into subtasks)
 - **Critical Path:** T-001 → T-002 → T-004 → T-005 → T-008 → T-009 → T-010
-- **Progress:** 1 of 10 complete
+- **Progress:** 2 of 10 complete
 
 ## Dependency Graph
 
@@ -77,7 +77,7 @@ Add `@threlte/core`, `@threlte/extras`, and `three` as devDependencies. Verify t
 
 ### T-002: Create stores and design tokens
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Medium
 **Dependencies:** T-001
 **Parallel:** —
