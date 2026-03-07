@@ -7,7 +7,7 @@
 ## Active Work
 - **Feature:** constellation-nav
 - **Phase:** tasks
-- **Progress:** 4 of 14 tasks complete
+- **Progress:** 12 of 14 tasks complete (T-009, T-012 deferred to polish)
 - **Branch:** genesis/003-constellation-nav
 
 ## Completed Features

@@ -13,7 +13,7 @@
 - **Total Tasks:** 14
 - **Complexity:** 5 Small, 7 Medium, 2 Large (split into phases)
 - **Critical Path:** T-001 → T-002 → T-005 → T-006 → T-007 → T-009 → T-010 → T-011 → T-014
-- **Progress:** 12 of 14 complete
+- **Progress:** 13 of 14 complete (T-009 deferred, T-012 deferred)
 
 ## Dependency Graph
 
@@ -498,7 +498,7 @@ Ensure pointer events flow correctly: 3D raycasting works for node clicks, mouse
 
 ### T-014: Cleanup removed components and full verification
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Small
 **Dependencies:** T-012, T-013
 **Parallel:** —
