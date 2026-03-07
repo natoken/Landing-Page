@@ -13,7 +13,7 @@
 - **Total Tasks:** 10
 - **Complexity:** 4 Small, 5 Medium, 1 Large (split into subtasks)
 - **Critical Path:** T-001 → T-002 → T-004 → T-005 → T-008 → T-009 → T-010
-- **Progress:** 9 of 10 complete
+- **Progress:** 10 of 10 complete
 
 ## Dependency Graph
 
@@ -346,7 +346,7 @@ Replace the old ParticleRenderer with ConstellationScene in the root layout. Upd
 
 ### T-010: Delete ParticleRenderer and full verification
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Small
 **Dependencies:** T-009
 **Parallel:** —
