@@ -1,5 +1,6 @@
 <script>
 	import { Canvas, T } from '@threlte/core';
+	import { onMount } from 'svelte';
 	import StarField from './StarField.svelte';
 	import SixCorners from './SixCorners.svelte';
 	import ConstellationLines from './ConstellationLines.svelte';
@@ -7,6 +8,15 @@
 	import TeamNodes from './TeamNodes.svelte';
 	import ProductConstellations from './ProductConstellations.svelte';
 	import CameraController from './CameraController.svelte';
+	import { clearSelection } from '$lib/stores/selectedNode.js';
+
+	onMount(() => {
+		const handleKeydown = (/** @type {KeyboardEvent} */ e) => {
+			if (e.key === 'Escape') clearSelection();
+		};
+		window.addEventListener('keydown', handleKeydown);
+		return () => window.removeEventListener('keydown', handleKeydown);
+	});
 </script>
 
 <Canvas>
@@ -24,6 +34,12 @@
 		attach="fog"
 		args={['#0d1117', 14, 35]}
 	/>
+
+	<!-- Click-on-empty clears selection -->
+	<T.Mesh position={[0, 0, -5]} onclick={() => clearSelection()}>
+		<T.PlaneGeometry args={[100, 100]} />
+		<T.MeshBasicMaterial visible={false} />
+	</T.Mesh>
 
 	<StarField />
 	<ConstellationLines />

@@ -3,6 +3,7 @@
 	import * as THREE from 'three';
 	import { productNodes } from '$lib/data/constellation.js';
 	import { products } from '$lib/data/products.js';
+	import { toggleNode } from '$lib/stores/selectedNode.js';
 
 	const PRODUCT_COLOR = new THREE.Color('#e6edf3');
 	const ACCENT_COLOR = new THREE.Color('#ed0049');
@@ -106,6 +107,15 @@
 
 <!-- Product star nodes -->
 {#each nodes as node (node.slug)}
+	<!-- Click target -->
+	<T.Mesh
+		position={node.position}
+		onclick={() => toggleNode('product', node.slug, node.product)}
+	>
+		<T.SphereGeometry args={[Math.max(node.radius * 2.5, 0.15), 12, 12]} />
+		<T.MeshBasicMaterial visible={false} />
+	</T.Mesh>
+
 	<!-- Main star point -->
 	<T.Mesh position={node.position}>
 		<T.SphereGeometry args={[node.radius, 16, 16]} />

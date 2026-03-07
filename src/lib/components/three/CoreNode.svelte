@@ -4,6 +4,7 @@
 	import * as THREE from 'three';
 	import { core } from '$lib/data/constellation.js';
 	import { reducedMotion } from '$lib/stores/motion.js';
+	import { toggleNode } from '$lib/stores/selectedNode.js';
 
 	const CORE_COLOR = new THREE.Color('#ed0049');
 	const PULSE_SPEED = 0.6;
@@ -93,6 +94,15 @@
 		/>
 	</T.Mesh>
 {/if}
+
+<!-- Invisible click target (larger hit area) -->
+<T.Mesh
+	position={core.position}
+	onclick={() => toggleNode('core', 'natoken', { label: core.label })}
+>
+	<T.SphereGeometry args={[0.6, 16, 16]} />
+	<T.MeshBasicMaterial visible={false} />
+</T.Mesh>
 
 <!-- Outer glow halo -->
 <T.Mesh position={core.position}>

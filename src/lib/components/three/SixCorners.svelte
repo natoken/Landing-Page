@@ -4,6 +4,7 @@
 	import * as THREE from 'three';
 	import { corners } from '$lib/data/constellation.js';
 	import { reducedMotion } from '$lib/stores/motion.js';
+	import { toggleNode } from '$lib/stores/selectedNode.js';
 
 	const FILLED_COLOR = new THREE.Color('#ed0049');
 	const UNFILLED_COLOR = new THREE.Color('#e6edf3');
@@ -35,6 +36,7 @@
 	<T.Mesh
 		bind:ref={cornerRefs[corner.id]}
 		position={corner.position}
+		onclick={() => toggleNode('corner', corner.id, corner)}
 		onpointerenter={() => { hoveredId = corner.id; }}
 		onpointerleave={() => { if (hoveredId === corner.id) hoveredId = null; }}
 	>

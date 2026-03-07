@@ -13,7 +13,7 @@
 - **Total Tasks:** 14
 - **Complexity:** 5 Small, 7 Medium, 2 Large (split into phases)
 - **Critical Path:** T-001 → T-002 → T-005 → T-006 → T-007 → T-009 → T-010 → T-011 → T-014
-- **Progress:** 4 of 14 complete
+- **Progress:** 6 of 14 complete
 
 ## Dependency Graph
 
@@ -195,7 +195,7 @@ Replace `ProductBranches.svelte` (particle clusters) with mini-constellation pat
 
 ### T-005: Build click/select system with shared store
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Medium
 **Dependencies:** T-002, T-003, T-004
 **Parallel:** —
@@ -230,7 +230,7 @@ Create the `selectedNode` store and wire up raycasting click handlers on all int
 
 ### T-006: Extend ConstellationLines with graph edges
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Medium
 **Dependencies:** T-001, T-005
 **Parallel:** [P] — can run in parallel with T-007, T-008

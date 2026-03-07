@@ -48,7 +48,7 @@
 		position: fixed;
 		inset: 0;
 		z-index: 0;
-		pointer-events: none;
+		pointer-events: auto;
 		background: var(--color-bg);
 		opacity: 0;
 		transition: opacity 0.8s ease-out;

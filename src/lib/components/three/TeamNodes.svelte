@@ -5,6 +5,7 @@
 	import { team } from '$lib/data/team.js';
 	import { teamNodes } from '$lib/data/constellation.js';
 	import { reducedMotion } from '$lib/stores/motion.js';
+	import { toggleNode } from '$lib/stores/selectedNode.js';
 
 	const NODE_COLOR = new THREE.Color('#e6edf3');
 	const PING_SPEED = 0.4;
@@ -59,6 +60,15 @@
 
 {#each pingData as pd (pd.member.slug)}
 	{#if pd.node}
+		<!-- Click target (larger invisible sphere) -->
+		<T.Mesh
+			position={pd.node.position}
+			onclick={() => toggleNode('team', pd.member.slug, pd.member)}
+		>
+			<T.SphereGeometry args={[0.2, 12, 12]} />
+			<T.MeshBasicMaterial visible={false} />
+		</T.Mesh>
+
 		<!-- Bright center point -->
 		<T.Mesh position={pd.node.position}>
 			<T.SphereGeometry args={[0.06, 12, 12]} />
