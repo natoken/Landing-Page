@@ -1,6 +1,6 @@
 <script>
   import '../app.css';
-  import { tick } from 'svelte';
+  import { tick, onMount } from 'svelte';
   import ProductDrawer from '$lib/components/ProductDrawer.svelte';
   import LeftPanelContent from '$lib/components/LeftPanelContent.svelte';
   import CenterPanelContent from '$lib/components/CenterPanelContent.svelte';
@@ -14,8 +14,10 @@
 
   let ConstellationScene = $state(null);
 
-  import('$lib/components/three/ConstellationScene.svelte').then((mod) => {
-    ConstellationScene = mod.default;
+  onMount(() => {
+    import('$lib/components/three/ConstellationScene.svelte').then((mod) => {
+      ConstellationScene = mod.default;
+    });
   });
 
   $effect(() => {

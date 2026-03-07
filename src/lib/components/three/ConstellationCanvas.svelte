@@ -3,6 +3,9 @@
 	import StarField from './StarField.svelte';
 	import SixCorners from './SixCorners.svelte';
 	import ConstellationLines from './ConstellationLines.svelte';
+	import CoreNode from './CoreNode.svelte';
+	import TeamNodes from './TeamNodes.svelte';
+	import ProductConstellations from './ProductConstellations.svelte';
 	import CameraController from './CameraController.svelte';
 </script>
 
@@ -25,5 +28,8 @@
 	<StarField />
 	<ConstellationLines />
 	<SixCorners />
+	<CoreNode />
+	<TeamNodes />
+	<ProductConstellations />
 	<CameraController />
 </Canvas>

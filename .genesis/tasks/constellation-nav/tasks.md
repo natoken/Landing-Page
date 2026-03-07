@@ -13,7 +13,7 @@
 - **Total Tasks:** 14
 - **Complexity:** 5 Small, 7 Medium, 2 Large (split into phases)
 - **Critical Path:** T-001 → T-002 → T-005 → T-006 → T-007 → T-009 → T-010 → T-011 → T-014
-- **Progress:** 0 of 14 complete
+- **Progress:** 4 of 14 complete
 
 ## Dependency Graph
 
@@ -58,7 +58,7 @@ T-012 and T-013 can run in parallel after T-011.
 
 ### T-001: Restructure data model as constellation graph
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Medium
 **Dependencies:** None
 **Parallel:** —
@@ -67,14 +67,14 @@ T-012 and T-013 can run in parallel after T-011.
 Transform the flat data arrays in `constellation.js`, `team.js`, and `products.js` into a rooted graph model. Add `slug`, `domain`, `parentCorner`, `children`, and `bridges` fields. Implement weight calculation for product sizing. Derive node positions from graph relationships.
 
 #### Acceptance Criteria
-- [ ] `constellation.js` exports a graph model with `core`, `corners`, `team`, `products`, and `edges` collections
-- [ ] Each product has a `weight` computed from its descendant count (1 + recursive children)
-- [ ] `team.js` includes `slug` and `domain` fields for all 5 members
-- [ ] `products.js` includes `slug`, `parentCorner`, `children`, and `bridges` fields
-- [ ] Products with `parentCorner` have positions derived outward from that corner
-- [ ] Champion Trials and Project Genesis are added to the product data
-- [ ] Arisce bridges both Taledom and RuneForge in the graph
-- [ ] `npm run build` succeeds
+- [x] `constellation.js` exports a graph model with `core`, `corners`, `team`, `products`, and `edges` collections
+- [x] Each product has a `weight` computed from its descendant count (1 + recursive children)
+- [x] `team.js` includes `slug` and `domain` fields for all 4 members
+- [x] `products.js` includes `slug`, `parentCorner`, `children`, and `bridges` fields
+- [x] Products with `parentCorner` have positions derived outward from that corner
+- [x] Champion Trials and Project Genesis are added to the product data
+- [x] Arisce bridges both Taledom and RuneForge in the graph
+- [x] `npm run build` succeeds
 
 #### File Paths
 - Modifies: `src/lib/data/constellation.js`
@@ -94,7 +94,7 @@ Transform the flat data arrays in `constellation.js`, `team.js`, and `products.j
 
 ### T-002: Add CoreNode component
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Small
 **Dependencies:** T-001
 **Parallel:** [P] — can run in parallel with T-003, T-004
@@ -103,10 +103,10 @@ Transform the flat data arrays in `constellation.js`, `team.js`, and `products.j
 Create the Natoken core node at the center of the hexagon. Visually distinct — larger, brighter, with brand color glow. Acts as the About access point.
 
 #### Acceptance Criteria
-- [ ] `CoreNode.svelte` renders a prominent sphere at `[0, 0, 0]` with brand color glow
-- [ ] Core node is visually larger and brighter than corner nodes
-- [ ] Core node has a subtle pulse animation (gated by `reducedMotion`)
-- [ ] Core node is distinguishable from all other node types
+- [x] `CoreNode.svelte` renders a prominent sphere at `[0, 0, 0]` with brand color glow
+- [x] Core node is visually larger and brighter than corner nodes
+- [x] Core node has a subtle pulse animation (gated by `reducedMotion`)
+- [x] Core node is distinguishable from all other node types
 
 #### File Paths
 - Creates: `src/lib/components/three/CoreNode.svelte`
@@ -123,7 +123,7 @@ Create the Natoken core node at the center of the hexagon. Visually distinct —
 
 ### T-003: Add TeamNodes component with radar-blip style
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Medium
 **Dependencies:** T-001
 **Parallel:** [P] — can run in parallel with T-002, T-004
@@ -132,15 +132,15 @@ Create the Natoken core node at the center of the hexagon. Visually distinct —
 Create team member nodes as radar-blip styled points: bright center, thin ring outline, periodic ping animation radiating outward. Positioned by their domain (corner or product node).
 
 #### Acceptance Criteria
-- [ ] `TeamNodes.svelte` renders one node per team member from data
-- [ ] Each node has a bright point center + thin ring outline
-- [ ] A periodic ping/blip animation radiates outward from each node (ring expands and fades)
-- [ ] Ping animation is gated by `reducedMotion` (static ring when reduced)
-- [ ] CEO node is near the CEO corner, CTO near CTO corner
-- [ ] Void is positioned near Taledom's product node
-- [ ] Scuttlecrab is positioned near Arisce's product node
-- [ ] Martynas is positioned near the CEO corner (reports to CEO)
-- [ ] Team nodes are visually distinct from product stars and corner nodes
+- [x] `TeamNodes.svelte` renders one node per team member from data
+- [x] Each node has a bright point center + thin ring outline
+- [x] A periodic ping/blip animation radiates outward from each node (ring expands and fades)
+- [x] Ping animation is gated by `reducedMotion` (static ring when reduced)
+- [x] CEO node is near the CEO corner, CTO near CTO corner
+- [x] Void is positioned near Taledom's product node
+- [x] Scuttlecrab is positioned near Arisce's product node
+- [x] Martynas removed from team (per owner request)
+- [x] Team nodes are visually distinct from product stars and corner nodes
 
 #### File Paths
 - Creates: `src/lib/components/three/TeamNodes.svelte`
@@ -157,7 +157,7 @@ Create team member nodes as radar-blip styled points: bright center, thin ring o
 
 ### T-004: Add ProductConstellations component
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Large → split into phases within one task
 **Dependencies:** T-001
 **Parallel:** [P] — can run in parallel with T-002, T-003
@@ -171,13 +171,13 @@ Replace `ProductBranches.svelte` (particle clusters) with mini-constellation pat
 3. Add bridge connections (Arisce → both Taledom and RuneForge)
 
 #### Acceptance Criteria
-- [ ] `ProductConstellations.svelte` renders each product as a star
-- [ ] Product star size visually scales with weight (more children = larger star)
-- [ ] Child products (e.g., Champion Trials) appear as smaller connected stars near their parent
-- [ ] Lines connect parent to children forming a mini-constellation shape
-- [ ] Arisce is connected to both Taledom and RuneForge via bridge lines
-- [ ] Product nodes are visually distinct from team nodes and corner nodes
-- [ ] `ProductBranches.svelte` is no longer used (removed from canvas)
+- [x] `ProductConstellations.svelte` renders each product as a star
+- [x] Product star size visually scales with weight (more children = larger star)
+- [x] Child products (e.g., Champion Trials) appear as smaller connected stars near their parent
+- [x] Lines connect parent to children forming a mini-constellation shape
+- [x] Arisce is connected to both Taledom and RuneForge via bridge lines
+- [x] Product nodes are visually distinct from team nodes and corner nodes
+- [x] `ProductBranches.svelte` is no longer used (removed from canvas)
 
 #### File Paths
 - Creates: `src/lib/components/three/ProductConstellations.svelte`

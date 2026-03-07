@@ -5,10 +5,10 @@
 **Current Phase:** Constitution established
 
 ## Active Work
-- **Feature:** constellation
+- **Feature:** constellation-nav
 - **Phase:** tasks
-- **Progress:** 10 of 10 tasks complete
-- **Branch:** genesis/002-constellation
+- **Progress:** 4 of 14 tasks complete
+- **Branch:** genesis/003-constellation-nav
 
 ## Completed Features
 | Feature | Completed | Branch | Merged |
@@ -57,3 +57,5 @@
 - Spec clarified: 6 Corners (hexagonal leadership anchors), product branches (RuneForge near CTO, Taledom near CEO), tiered star counts, glass panels, route persistence.
 - Plan approved: constellation. 6 new components, 3 stores, 12-step build order. Threlte + Three.js lazy-loaded (~165KB). InstancedMesh for stars, shader twinkle, Three.js Fog.
 - Tasks decomposed: 10 tasks (4 small, 5 medium, 1 large). Critical path: T-001 → T-002 → T-004 → T-005 → T-008 → T-009 → T-010. T-003/T-006/T-007 parallelizable.
+- constellation: Implementation complete with bug fixes (fog shader crash, 2D→3D star distribution, mouse parallax, constellation lines). Pending review/merge.
+- Spec approved: constellation-nav (map-driven spatial navigation replacing static panels). Constellation becomes primary interface: core node at center, team as radar blips, products as mini-constellations with size scaling, Obsidian-like graph layout.
