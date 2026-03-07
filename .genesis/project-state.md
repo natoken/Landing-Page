@@ -5,15 +5,15 @@
 **Current Phase:** Constitution established
 
 ## Active Work
-- **Feature:** cloudflare-migration
-- **Phase:** tasks
-- **Progress:** 6 of 7 tasks complete
-- **Branch:** genesis/001-cloudflare-migration
+- **Feature:** constellation
+- **Phase:** specify
+- **Progress:** 0 of 0 tasks (not yet decomposed)
+- **Branch:** genesis/002-constellation
 
 ## Completed Features
 | Feature | Completed | Branch | Merged |
 |---------|-----------|--------|--------|
-| — | — | — | — |
+| cloudflare-migration | 2026-03-07 | genesis/001-cloudflare-migration | Yes (squash to main) |
 
 ## Key Decisions
 | Decision | Rationale | Date | Constitutional? |
@@ -52,3 +52,5 @@
 - Design docs created: overview (site map, as-is/to-be, convergence path), design system (full token reference, motion patterns, component patterns), architecture (4-layer rendering pipeline, Threlte scene graph, GSAP integration, build pipeline), content model (all data schemas, relationships, migration plan).
 - Spec approved: cloudflare-migration (migrate to Cloudflare Pages, remove base path hack, swap accent to #ed0049, add security headers, tear down GitHub Pages).
 - Plan approved and tasks decomposed: 7 tasks (5 small, 2 medium). Critical path: T-001 → T-002 → T-006 → T-007. T-003/T-004/T-005 parallelizable.
+- cloudflare-migration: All code tasks complete (T-001–T-006). Squash merged to main, pushed to trigger Cloudflare rebuild. T-007 (manual setup) complete.
+- Spec approved: constellation (replace 2D particle renderer with Threlte 3D star field). Full viewport coverage, depth fog, 500+ stars, camera drift, reduced motion support, 2D fallback, async loading.
