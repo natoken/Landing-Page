@@ -6,7 +6,7 @@
 
 ## Active Work
 - **Feature:** constellation
-- **Phase:** specify
+- **Phase:** plan
 - **Progress:** 0 of 0 tasks (not yet decomposed)
 - **Branch:** genesis/002-constellation
 
@@ -54,3 +54,5 @@
 - Plan approved and tasks decomposed: 7 tasks (5 small, 2 medium). Critical path: T-001 → T-002 → T-006 → T-007. T-003/T-004/T-005 parallelizable.
 - cloudflare-migration: All code tasks complete (T-001–T-006). Squash merged to main, pushed to trigger Cloudflare rebuild. T-007 (manual setup) complete.
 - Spec approved: constellation (replace 2D particle renderer with Threlte 3D star field). Full viewport coverage, depth fog, 500+ stars, camera drift, reduced motion support, 2D fallback, async loading.
+- Spec clarified: 6 Corners (hexagonal leadership anchors), product branches (RuneForge near CTO, Taledom near CEO), tiered star counts, glass panels, route persistence.
+- Plan approved: constellation. 6 new components, 3 stores, 12-step build order. Threlte + Three.js lazy-loaded (~165KB). InstancedMesh for stars, shader twinkle, Three.js Fog.
