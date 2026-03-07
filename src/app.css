@@ -8,8 +8,8 @@
   --color-border-strong: rgba(255, 255, 255, 0.1);
   --color-text: #e6edf3;
   --color-text-muted: #7d8590;
-  --color-accent: #2563eb;
-  --color-accent-hover: #3b82f6;
+  --color-accent: #ed0049;
+  --color-accent-hover: #ff1a5e;
   --color-success: #3fb950;
   --color-wip: #d29922;
 
@@ -114,7 +114,7 @@ a:hover {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid rgba(88, 166, 255, 0.5);
+  outline: 2px solid rgba(237, 0, 73, 0.4);
   outline-offset: 2px;
 }
 
@@ -223,7 +223,7 @@ button:focus-visible {
 .btn:hover {
   border-color: var(--color-accent);
   color: var(--color-accent-hover);
-  background: rgba(88, 166, 255, 0.06);
+  background: rgba(237, 0, 73, 0.06);
 }
 
 .btn-ghost {
@@ -349,7 +349,7 @@ button:focus-visible {
 
 .contact-copy:hover {
   color: var(--color-accent);
-  background: rgba(88, 166, 255, 0.08);
+  background: rgba(237, 0, 73, 0.08);
 }
 
 .contact-copy:focus-visible {
@@ -390,7 +390,7 @@ button:focus-visible {
 .product-card:hover {
   transform: scale(1.02);
   border-color: var(--color-border);
-  box-shadow: 0 0 0 1px rgba(88, 166, 255, 0.15);
+  box-shadow: 0 0 0 1px rgba(237, 0, 73, 0.15);
 }
 
 .product-image {

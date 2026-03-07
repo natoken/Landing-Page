@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
 
   /** Default fallback; actual accent read from CSS in resize() */
-  let particleColor = '#58a6ff';
+  let particleColor = '#ed0049';
   const PARTICLE_COUNT = 48;
   const PARTICLE_SIZE_MIN = 1;
   const PARTICLE_SIZE_MAX = 2.5;
@@ -129,8 +129,8 @@
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(88, 166, 255, 0.12) 0%,
-      rgba(88, 166, 255, 0.05) 35%,
+      rgba(237, 0, 73, 0.12) 0%,
+      rgba(237, 0, 73, 0.05) 35%,
       transparent 100%
     );
     z-index: 0;

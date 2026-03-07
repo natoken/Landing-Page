@@ -1,5 +1,4 @@
 <script>
-  import { base } from '$app/paths';
   import { team } from '$lib/data/team.js';
 </script>
 
@@ -14,7 +13,7 @@
             <article class="team-card">
               <div class="team-image" aria-hidden="true">
                 {#if member.image}
-                  <img src={base ? `${base}/${member.image}` : `/${member.image}`} alt="" width="280" height="280" />
+                  <img src="/{member.image}" alt="" width="280" height="280" />
                 {:else}
                   <span class="team-initial">{(member.nickname ?? member.name).charAt(0)}</span>
                 {/if}

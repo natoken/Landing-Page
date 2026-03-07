@@ -1,5 +1,4 @@
 <script>
-  import { base } from '$app/paths';
   import { fly, fade } from 'svelte/transition';
   import { mobileProductDrawerOpen } from '$lib/stores/mobileDrawer.js';
 
@@ -58,7 +57,7 @@
         {#if product}
           <div class="drawer-image" aria-hidden="true">
             {#if product.image}
-              <img src={base ? `${base}/${product.image}` : `/${product.image}`} alt="" width="360" height="200" />
+              <img src="/{product.image}" alt="" width="360" height="200" />
             {:else}
               <span class="drawer-initial">{product.name.charAt(0)}</span>
             {/if}
@@ -171,7 +170,7 @@
   }
 
   .drawer-link:focus-visible {
-    outline: 2px solid rgba(88, 166, 255, 0.5);
+    outline: 2px solid rgba(237, 0, 73, 0.4);
     outline-offset: 2px;
   }
 

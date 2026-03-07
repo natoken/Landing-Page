@@ -5,10 +5,10 @@
 **Current Phase:** Constitution established
 
 ## Active Work
-- **Feature:** None
-- **Phase:** constitute
-- **Progress:** Complete
-- **Branch:** main
+- **Feature:** cloudflare-migration
+- **Phase:** tasks
+- **Progress:** 6 of 7 tasks complete
+- **Branch:** genesis/001-cloudflare-migration
 
 ## Completed Features
 | Feature | Completed | Branch | Merged |
@@ -50,3 +50,5 @@
 - Discovery complete: codebase scan + owner interview. Vision: "Premium Deluxe" company site at natoken.dev. Key decisions: Svelte 5, Cloudflare Pages, #ed0049 brand, innovative frontend, hiring page, Genesis-managed blog.
 - Constitution established: Tech stack locked (Svelte 5, GSAP, Threlte, mdsvex, vanilla CSS). Design language: "Constellation Terminal". Git strategy: feature branches, conventional commits, squash merge, auto-deploy.
 - Design docs created: overview (site map, as-is/to-be, convergence path), design system (full token reference, motion patterns, component patterns), architecture (4-layer rendering pipeline, Threlte scene graph, GSAP integration, build pipeline), content model (all data schemas, relationships, migration plan).
+- Spec approved: cloudflare-migration (migrate to Cloudflare Pages, remove base path hack, swap accent to #ed0049, add security headers, tear down GitHub Pages).
+- Plan approved and tasks decomposed: 7 tasks (5 small, 2 medium). Critical path: T-001 → T-002 → T-006 → T-007. T-003/T-004/T-005 parallelizable.

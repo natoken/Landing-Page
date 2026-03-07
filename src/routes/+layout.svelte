@@ -1,6 +1,5 @@
 <script>
   import '../app.css';
-  import { base } from '$app/paths';
   import { tick } from 'svelte';
   import ProductDrawer from '$lib/components/ProductDrawer.svelte';
   import ParticleRenderer from '$lib/components/ParticleRenderer.svelte';
@@ -23,12 +22,6 @@
     });
   });
 </script>
-
-<svelte:head>
-  {#if base}
-    <base href="{base}/" />
-  {/if}
-</svelte:head>
 
 <div class="layout">
   <div class="layout-top">
@@ -225,7 +218,7 @@
   .mobile-tab.active {
     color: #fff;
     background: var(--color-accent);
-    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 0 0 1px rgba(237, 0, 73, 0.4);
   }
 
   .layout-grid {
@@ -264,11 +257,11 @@
     background: var(--color-bg);
     background-image: linear-gradient(
       135deg,
-      rgba(88, 166, 255, 0.08) 0%,
-      rgba(88, 166, 255, 0.03) 25%,
+      rgba(237, 0, 73, 0.08) 0%,
+      rgba(237, 0, 73, 0.03) 25%,
       transparent 50%,
       transparent 75%,
-      rgba(88, 166, 255, 0.04) 100%
+      rgba(237, 0, 73, 0.04) 100%
     );
   }
 
