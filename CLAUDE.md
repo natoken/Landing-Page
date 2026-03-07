@@ -3,7 +3,7 @@
 ## Genesis System
 This project uses Project Genesis for structured development.
 - **Mode:** Brownfield
-- **Current Phase:** Initialized
+- **Current Phase:** Constitution established
 
 ## Before Every Interaction
 1. Read `.genesis/project-state.md` for current state
@@ -46,7 +46,34 @@ Type `/genesis:help` for a complete guide to all commands.
 | `/genesis:help` | Detailed guide to all commands |
 
 ## Project Conventions
-_Populated from constitution during /genesis:constitute_
+
+### Tech Stack
+- **Svelte 5** (Runes) + **SvelteKit 2** + **Vite 6** — non-negotiable
+- **GSAP** — all UI animation (scroll, hover, transitions, cursor effects)
+- **Threlte** (Three.js for Svelte) — 3D constellation backdrop
+- **mdsvex** — blog posts as `.svx` files
+- **Vanilla CSS** with design tokens — no CSS frameworks
+- **Static adapter** — prerendered, deployed to Cloudflare Pages at `natoken.dev`
+
+### Brand
+- Accent: `#ed0049` | Dark theme: `#0d1117` family
+- Design language: "Constellation Terminal" — sci-fi command deck, glass panels in 3D star field
+
+### Code Style
+- Components: `PascalCase.svelte` | Modules: `camelCase.js`
+- CSS tokens: `--color-*`, `--text-*`, `--font-*`, `--radius-*`
+- Imports: Svelte > Third-party > Components > Data > Stores > Actions
+- JSDoc `@type` on data exports, minimal comments elsewhere
+- No new dependencies without constitutional amendment
+
+### Quality Gates
+- `npm run build` must pass with zero errors/warnings
+- Cross-browser (Chrome, Firefox, Safari), mobile 375px+
+- All animations respect `prefers-reduced-motion`
+- Design tokens only — no hardcoded colors/sizes
 
 ## Git Strategy
-_Populated from constitution during /genesis:constitute_
+- **Branches:** `feature/*`, `fix/*`, `chore/*` off `main`
+- **Commits:** `type(scope): description` (feat, fix, style, refactor, chore, docs, genesis)
+- **Merge:** Squash merge to `main`
+- **Deploy:** Auto on push to `main` via Cloudflare Pages
