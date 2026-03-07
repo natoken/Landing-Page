@@ -13,7 +13,7 @@
 - **Total Tasks:** 14
 - **Complexity:** 5 Small, 7 Medium, 2 Large (split into phases)
 - **Critical Path:** T-001 → T-002 → T-005 → T-006 → T-007 → T-009 → T-010 → T-011 → T-014
-- **Progress:** 8 of 14 complete
+- **Progress:** 9 of 14 complete
 
 ## Dependency Graph
 
@@ -303,7 +303,7 @@ Create the floating glass panel that displays content for the selected node. Has
 
 ### T-008: Add constellation dim effect when panel is open
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Small
 **Dependencies:** T-005
 **Parallel:** [P] — can run in parallel with T-006, T-007

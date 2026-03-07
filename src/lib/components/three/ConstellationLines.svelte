@@ -3,6 +3,7 @@
 	import { useTask } from '@threlte/core';
 	import * as THREE from 'three';
 	import { edges as graphEdges } from '$lib/data/constellation.js';
+	import { selectedNode } from '$lib/stores/selectedNode.js';
 
 	const ACCENT = new THREE.Color('#ed0049');
 	const DIM = new THREE.Color('#e6edf3');
@@ -43,11 +44,18 @@
 
 	const pulsingMats = lines.filter((l) => l.pulses);
 
+	let dimFactor = 1;
+
 	useTask((delta) => {
 		time += delta * PULSE_SPEED;
+
+		const targetDim = $selectedNode ? 0.3 : 1.0;
+		dimFactor += (targetDim - dimFactor) * Math.min(delta * 4, 1);
+
 		const pulse = 0.7 + 0.3 * Math.sin(time);
-		for (const line of pulsingMats) {
-			line.material.opacity = line.baseOpacity * pulse;
+		for (const line of lines) {
+			const p = line.pulses ? pulse : 1;
+			line.material.opacity = line.baseOpacity * p * dimFactor;
 		}
 	});
 </script>

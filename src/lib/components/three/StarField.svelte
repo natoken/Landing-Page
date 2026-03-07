@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import * as THREE from 'three';
 	import { reducedMotion } from '$lib/stores/motion.js';
+	import { selectedNode } from '$lib/stores/selectedNode.js';
 	import { getStarCount, densityAxes } from '$lib/data/constellation.js';
 
 	const { size } = useThrelte();
@@ -17,7 +18,8 @@
 	const material = new THREE.ShaderMaterial({
 		uniforms: {
 			uTime: { value: 0 },
-			uEntrance: { value: 0 }
+			uEntrance: { value: 0 },
+			uDim: { value: 1.0 }
 		},
 		vertexShader: `
 			attribute float aPhase;
@@ -61,6 +63,7 @@
 			}
 		`,
 		fragmentShader: `
+			uniform float uDim;
 			varying float vOpacity;
 			varying float vColorTemp;
 			varying vec2 vUv;
@@ -92,7 +95,7 @@
 				// Hot white core
 				starColor = mix(starColor, vec3(1.0), core * 0.6);
 
-				gl_FragColor = vec4(starColor, alpha);
+				gl_FragColor = vec4(starColor, alpha * uDim);
 			}
 		`,
 		transparent: true,
@@ -235,6 +238,11 @@
 		if (!$reducedMotion) {
 			material.uniforms.uTime.value += delta;
 		}
+
+		// Smooth dim when panel is open
+		const targetDim = $selectedNode ? 0.3 : 1.0;
+		const currentDim = material.uniforms.uDim.value;
+		material.uniforms.uDim.value += (targetDim - currentDim) * Math.min(delta * 4, 1);
 	});
 
 	onMount(() => {
