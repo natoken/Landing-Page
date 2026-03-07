@@ -34,17 +34,16 @@
 
 {#each corners as corner (corner.id)}
 	<T.Mesh
+		name={`corner:${corner.id}`}
 		bind:ref={cornerRefs[corner.id]}
 		position={corner.position}
-		onclick={() => toggleNode('corner', corner.id, corner)}
-		onpointerenter={() => { hoveredId = corner.id; }}
-		onpointerleave={() => { if (hoveredId === corner.id) hoveredId = null; }}
 	>
 		<T.SphereGeometry args={[corner.filled ? 0.12 : 0.06, 16, 16]} />
 		<T.MeshBasicMaterial
 			color={corner.filled ? FILLED_COLOR : UNFILLED_COLOR}
 			transparent
 			opacity={corner.filled ? 0.95 : (hoveredId === corner.id ? 0.5 : 0.15)}
+			fog={false}
 		/>
 	</T.Mesh>
 
@@ -56,6 +55,8 @@
 				color={FILLED_COLOR}
 				transparent
 				opacity={0.08}
+				depthWrite={false}
+				fog={false}
 			/>
 		</T.Mesh>
 		<T.PointLight

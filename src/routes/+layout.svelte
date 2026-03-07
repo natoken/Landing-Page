@@ -22,20 +22,20 @@
 {/if}
 
 <div class="layout">
-  <div class="layout-top">
+  <header class="site-header">
     <div class="site-brand">
       <div class="site-brand-logo" aria-hidden="true">
         <NatokenLogo />
       </div>
-      <h1 class="site-brand-title">NATOKEN</h1>
-      <p class="site-brand-slogan">Building software that matters.</p>
+      <span class="site-brand-name">NATOKEN</span>
     </div>
-  </div>
+  </header>
 
   {@render children()}
 
   <footer class="site-footer">
-    <p>© {new Date().getFullYear()} Natoken LLC</p>
+    <p class="site-footer-slogan">Building software that matters.</p>
+    <p class="site-footer-copy">© {new Date().getFullYear()} Natoken LLC</p>
   </footer>
 </div>
 
@@ -47,72 +47,61 @@
     position: relative;
     z-index: 1;
     pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 0.35rem;
   }
 
-  .layout-top {
-    flex-shrink: 0;
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    padding: 16px 20px;
     pointer-events: none;
   }
 
   .site-brand {
-    position: relative;
-    text-align: center;
-    padding: 0.25rem 0;
-  }
-
-  .site-brand-title {
-    position: relative;
-    z-index: 1;
-    margin: 0;
-    font-family: var(--font-sans);
-    font-size: clamp(2.5rem, 11vw, 4.25rem);
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    text-transform: uppercase;
-    color: #fff;
-  }
-
-  .site-brand-slogan {
-    position: relative;
-    z-index: 1;
-    margin: 0.1rem 0 0;
-    font-size: var(--text-base);
-    font-weight: 500;
-    color: var(--color-text);
-    opacity: 0.95;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .site-brand-logo {
-    position: absolute;
-    left: 50%;
-    top: calc(50% + 48px);
-    transform: translate(-50%, -50%);
-    width: 300px;
-    height: 300px;
-    z-index: 0;
-    pointer-events: none;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
     color: var(--color-accent);
+    opacity: 0.85;
+  }
+
+  .site-brand-name {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0.7;
   }
 
   .site-footer {
     position: fixed;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 14px;
+    left: 20px;
     z-index: 1;
     pointer-events: none;
-    text-align: center;
   }
 
-  .site-footer p {
-    margin: 0;
+  .site-footer-slogan {
+    margin: 0 0 2px;
     font-size: 0.75rem;
+    font-weight: 500;
     color: var(--color-text-muted);
-    opacity: 0.5;
+    opacity: 0.45;
+  }
+
+  .site-footer-copy {
+    margin: 0;
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+    opacity: 0.35;
   }
 </style>

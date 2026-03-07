@@ -10,7 +10,7 @@
 	const { size } = useThrelte();
 
 	const FIELD_RADIUS = 14;
-	const MAX_STARS = 1000;
+	const MAX_STARS = 1500;
 	const ENTRANCE_DURATION = 2.5;
 
 	const geometry = new THREE.PlaneGeometry(0.1, 0.1);
@@ -130,8 +130,8 @@
 		const v = Math.random();
 		const theta = 2 * Math.PI * u;
 		const phi = Math.acos(2 * v - 1);
-		// Bias radius: more stars in the mid-range, fewer at center/edge
-		const r = (0.8 + Math.random() * 0.2) * FIELD_RADIUS * Math.cbrt(Math.random());
+		// Bias radius outward: fewer near center, filling edges
+		const r = FIELD_RADIUS * (0.15 + 0.85 * Math.sqrt(Math.random()));
 
 		let x = r * Math.sin(phi) * Math.cos(theta);
 		let y = r * Math.sin(phi) * Math.sin(theta);

@@ -15,15 +15,6 @@
 </script>
 
 {#if node}
-	<!-- Backdrop — click outside to close -->
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div
-		class="panel-backdrop"
-		class:no-motion={$reducedMotion}
-		onclick={clearSelection}
-		onkeydown={(e) => { if (e.key === 'Escape') clearSelection(); }}
-	></div>
-
 	<div
 		class="info-panel"
 		class:no-motion={$reducedMotion}
@@ -138,53 +129,36 @@
 {/if}
 
 <style>
-	.panel-backdrop {
-		position: fixed;
-		inset: 0;
-		z-index: 90;
-		background: rgba(0, 0, 0, 0.3);
-		animation: fadeIn 0.2s ease-out;
-	}
-
-	.panel-backdrop.no-motion {
-		animation: none;
-	}
-
 	.info-panel {
 		position: fixed;
 		z-index: 100;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: min(420px, calc(100vw - 32px));
-		max-height: calc(100vh - 80px);
+		top: 16px;
+		right: 16px;
+		bottom: 16px;
+		width: min(360px, calc(100vw - 32px));
 		overflow-y: auto;
 		border-radius: 16px;
-		background: rgba(13, 17, 23, 0.85);
-		backdrop-filter: blur(20px);
-		-webkit-backdrop-filter: blur(20px);
+		background: rgba(13, 17, 23, 0.7);
+		backdrop-filter: blur(24px);
+		-webkit-backdrop-filter: blur(24px);
 		border: 1px solid rgba(255, 255, 255, 0.08);
 		box-shadow:
-			0 0 0 1px rgba(237, 0, 73, 0.08),
-			0 8px 32px rgba(0, 0, 0, 0.5),
-			0 0 80px rgba(237, 0, 73, 0.06);
-		animation: panelIn 0.25s ease-out;
+			0 0 0 1px rgba(237, 0, 73, 0.06),
+			0 8px 32px rgba(0, 0, 0, 0.4),
+			0 0 60px rgba(237, 0, 73, 0.04);
+		animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 		scrollbar-width: thin;
 		scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+		pointer-events: auto;
 	}
 
 	.info-panel.no-motion {
 		animation: none;
 	}
 
-	@keyframes fadeIn {
-		from { opacity: 0; }
-		to { opacity: 1; }
-	}
-
-	@keyframes panelIn {
-		from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
-		to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+	@keyframes slideIn {
+		from { opacity: 0; transform: translateX(24px); }
+		to { opacity: 1; transform: translateX(0); }
 	}
 
 	.panel-close {

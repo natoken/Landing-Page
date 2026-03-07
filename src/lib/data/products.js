@@ -12,6 +12,7 @@
  *   bridges?: string[];
  *   type?: 'product' | 'tool';
  *   mascot?: { name: string; image?: string };
+ *   accentColor?: string;
  * }} Product
  */
 
@@ -26,7 +27,8 @@ export const products = [
     image: 'Ignis.webp',
     parentCorner: 'cto',
     children: ['champion-trials'],
-    mascot: { name: 'Ignis' }
+    mascot: { name: 'Ignis' },
+    accentColor: '#ed0049'
   },
   {
     slug: 'taledom',
@@ -37,7 +39,8 @@ export const products = [
     image: undefined,
     parentCorner: 'ceo',
     children: ['breaking-worlds', 'minos-journey', 'tower-of-heavens'],
-    mascot: { name: 'Inky' }
+    mascot: { name: 'Inky' },
+    accentColor: '#3e88f2'
   },
   {
     slug: 'breaking-worlds',
@@ -49,7 +52,8 @@ export const products = [
     parent: 'taledom',
     parentCorner: undefined,
     children: [],
-    mascot: { name: 'Kyuro' }
+    mascot: { name: 'Kyuro' },
+    accentColor: '#3e88f2'
   },
   {
     slug: 'minos-journey',
@@ -61,7 +65,8 @@ export const products = [
     parent: 'taledom',
     parentCorner: undefined,
     children: [],
-    mascot: { name: 'Mino' }
+    mascot: { name: 'Mino' },
+    accentColor: '#3e88f2'
   },
   {
     slug: 'tower-of-heavens',
@@ -72,7 +77,8 @@ export const products = [
     image: undefined,
     parent: 'taledom',
     parentCorner: undefined,
-    children: ['eyes-of-abyss', 'eyes-of-dawn']
+    children: ['eyes-of-abyss', 'eyes-of-dawn'],
+    accentColor: '#3e88f2'
   },
   {
     slug: 'eyes-of-abyss',
@@ -83,7 +89,8 @@ export const products = [
     image: undefined,
     parent: 'tower-of-heavens',
     parentCorner: undefined,
-    children: []
+    children: [],
+    accentColor: '#3e88f2'
   },
   {
     slug: 'eyes-of-dawn',
@@ -94,7 +101,8 @@ export const products = [
     image: undefined,
     parent: 'tower-of-heavens',
     parentCorner: undefined,
-    children: []
+    children: [],
+    accentColor: '#3e88f2'
   },
   {
     slug: 'arisce',
@@ -105,7 +113,8 @@ export const products = [
     image: undefined,
     parentCorner: undefined,
     children: [],
-    bridges: ['taledom', 'runeforge']
+    bridges: ['taledom', 'runeforge'],
+    accentColor: '#6b3fa0'
   },
   {
     slug: 'champion-trials',
@@ -116,7 +125,8 @@ export const products = [
     image: undefined,
     parent: 'runeforge',
     parentCorner: undefined,
-    children: []
+    children: [],
+    accentColor: '#d4a830'
   },
   {
     slug: 'genesis',
@@ -127,7 +137,8 @@ export const products = [
     image: undefined,
     parentCorner: undefined,
     children: [],
-    type: 'tool'
+    type: 'tool',
+    accentColor: '#ed0049'
   }
 ];
 

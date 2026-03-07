@@ -3,10 +3,10 @@ import { team } from './team.js';
 
 // --- Constants ---
 
-const CORNER_RADIUS = 3;
-const PRODUCT_RADIUS_MULT = 1.2;
-const CHILD_OFFSET = 0.55;
-const TEAM_OFFSET = 0.45;
+const CORNER_RADIUS = 2.4;
+const PRODUCT_RADIUS_MULT = 1.6;
+const CHILD_OFFSET = 0.7;
+const TEAM_OFFSET = 0.35;
 
 // --- Helpers ---
 
@@ -31,12 +31,12 @@ export const core = {
 
 /** @type {Corner[]} */
 export const corners = [
-	{ id: 'ceo', label: 'CEO', angle: 90, position: anglePos(90, CORNER_RADIUS), filled: true },
-	{ id: 'cto', label: 'CTO', angle: 30, position: anglePos(30, CORNER_RADIUS), filled: true },
-	{ id: 'open-1', label: '', angle: 330, position: anglePos(330, CORNER_RADIUS), filled: false },
-	{ id: 'open-2', label: '', angle: 270, position: anglePos(270, CORNER_RADIUS), filled: false },
-	{ id: 'open-3', label: '', angle: 210, position: anglePos(210, CORNER_RADIUS), filled: false },
-	{ id: 'open-4', label: '', angle: 150, position: anglePos(150, CORNER_RADIUS), filled: false }
+	{ id: 'ceo', label: 'CEO', angle: 120, position: anglePos(120, CORNER_RADIUS), filled: true },
+	{ id: 'cto', label: 'CTO', angle: 60, position: anglePos(60, CORNER_RADIUS), filled: true },
+	{ id: 'open-1', label: '', angle: 0, position: anglePos(0, CORNER_RADIUS), filled: false },
+	{ id: 'open-2', label: '', angle: 300, position: anglePos(300, CORNER_RADIUS), filled: false },
+	{ id: 'open-3', label: '', angle: 240, position: anglePos(240, CORNER_RADIUS), filled: false },
+	{ id: 'open-4', label: '', angle: 180, position: anglePos(180, CORNER_RADIUS), filled: false }
 ];
 
 function getCorner(id) {
@@ -143,39 +143,32 @@ export function getProductNode(slug) {
  */
 
 /** @type {TeamNode[]} */
-export const teamNodes = team.map((member) => {
-	let position;
+export const teamNodes = team.map((member, idx) => {
+	// Find the direction they should face (toward their corner or product's corner)
+	let targetAngle = 0;
+	const isBoard = member.domain === 'ceo' || member.domain === 'cto';
 
 	if (member.domain === 'product' && member.product) {
-		// Positioned near their product node
 		const prodNode = productNodeMap.get(member.product);
 		if (prodNode) {
-			position = [
-				prodNode.position[0] + TEAM_OFFSET * 0.6,
-				prodNode.position[1] - TEAM_OFFSET * 0.4,
-				prodNode.position[2] + 0.1
-			];
+			targetAngle = Math.atan2(prodNode.position[1], prodNode.position[0]);
 		}
-	}
-
-	if (!position) {
-		// Positioned near their corner
+	} else {
 		const cornerId = member.nearCorner || member.domain;
 		const corner = getCorner(cornerId);
 		if (corner) {
-			// Offset slightly inward from the corner toward center
-			const inwardFactor = 0.72;
-			position = [
-				corner.position[0] * inwardFactor,
-				corner.position[1] * inwardFactor,
-				0.1
-			];
+			targetAngle = Math.atan2(corner.position[1], corner.position[0]);
 		}
 	}
 
-	if (!position) {
-		position = [0, 0, 0];
-	}
+	// Board members (tier 1): deep inside hex at ~35% radius, on exact hex spoke
+	// Product leaders (tier 2): closer to hex edge at ~75% radius
+	const r = isBoard ? CORNER_RADIUS * 0.35 : CORNER_RADIUS * 0.75;
+	const position = [
+		r * Math.cos(targetAngle),
+		r * Math.sin(targetAngle),
+		0.1
+	];
 
 	return { slug: member.slug, position };
 });
@@ -200,7 +193,7 @@ export const edges = [];
 
 // Corner → Core
 for (const c of corners) {
-	edges.push({ from: c.position, to: core.position, type: 'hierarchy', opacity: c.filled ? 0.15 : 0.06 });
+	edges.push({ from: c.position, to: core.position, type: 'hierarchy', opacity: c.filled ? 0.3 : 0.12 });
 }
 
 // Corner → Corner (hexagon outline)
@@ -211,7 +204,7 @@ for (let i = 0; i < corners.length; i++) {
 		from: corners[i].position,
 		to: next.position,
 		type: 'hierarchy',
-		opacity: eitherFilled ? 0.25 : 0.08
+		opacity: eitherFilled ? 0.5 : 0.16
 	});
 }
 
@@ -221,7 +214,7 @@ for (const p of products) {
 	const corner = getCorner(p.parentCorner);
 	const pNode = productNodeMap.get(p.slug);
 	if (corner && pNode) {
-		edges.push({ from: pNode.position, to: corner.position, type: 'product', opacity: 0.2 });
+		edges.push({ from: pNode.position, to: corner.position, type: 'product', opacity: 0.4 });
 	}
 }
 
@@ -231,7 +224,7 @@ for (const p of products) {
 	const parentNode = productNodeMap.get(p.parent);
 	const childNode = productNodeMap.get(p.slug);
 	if (parentNode && childNode) {
-		edges.push({ from: childNode.position, to: parentNode.position, type: 'product', opacity: 0.25 });
+		edges.push({ from: childNode.position, to: parentNode.position, type: 'product', opacity: 0.5 });
 	}
 }
 
@@ -243,7 +236,7 @@ for (const p of products) {
 	for (const bridgeSlug of p.bridges) {
 		const bridgeNode = productNodeMap.get(bridgeSlug);
 		if (bridgeNode) {
-			edges.push({ from: pNode.position, to: bridgeNode.position, type: 'bridge', opacity: 0.15 });
+			edges.push({ from: pNode.position, to: bridgeNode.position, type: 'bridge', opacity: 0.3 });
 		}
 	}
 }
@@ -256,13 +249,13 @@ for (const tn of teamNodes) {
 	if (member.domain === 'product' && member.product) {
 		const prodNode = productNodeMap.get(member.product);
 		if (prodNode) {
-			edges.push({ from: tn.position, to: prodNode.position, type: 'team', opacity: 0.12 });
+			edges.push({ from: tn.position, to: prodNode.position, type: 'team', opacity: 0.24 });
 		}
 	} else {
 		const cornerId = member.nearCorner || member.domain;
 		const corner = getCorner(cornerId);
 		if (corner) {
-			edges.push({ from: tn.position, to: corner.position, type: 'team', opacity: 0.12 });
+			edges.push({ from: tn.position, to: corner.position, type: 'team', opacity: 0.24 });
 		}
 	}
 }
@@ -277,9 +270,9 @@ export const densityAxes = corners.map((c) => {
 
 /** @type {{ maxWidth: number; count: number }[]} */
 export const starTiers = [
-	{ maxWidth: 639, count: 500 },
-	{ maxWidth: 1279, count: 750 },
-	{ maxWidth: Infinity, count: 1000 }
+	{ maxWidth: 639, count: 700 },
+	{ maxWidth: 1279, count: 1000 },
+	{ maxWidth: Infinity, count: 1400 }
 ];
 
 /**
@@ -290,5 +283,5 @@ export function getStarCount(width) {
 	for (const tier of starTiers) {
 		if (width <= tier.maxWidth) return tier.count;
 	}
-	return 1000;
+	return 1400;
 }

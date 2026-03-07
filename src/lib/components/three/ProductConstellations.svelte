@@ -1,37 +1,78 @@
 <script>
 	import { T } from '@threlte/core';
+	import { useTask } from '@threlte/core';
 	import * as THREE from 'three';
 	import { productNodes } from '$lib/data/constellation.js';
 	import { products } from '$lib/data/products.js';
-	import { toggleNode } from '$lib/stores/selectedNode.js';
+	import { toggleNode, hoveredProduct, hoveredPath } from '$lib/stores/selectedNode.js';
+	import { reducedMotion } from '$lib/stores/motion.js';
 
-	const PRODUCT_COLOR = new THREE.Color('#e6edf3');
-	const ACCENT_COLOR = new THREE.Color('#ed0049');
+	const COMPANY_ACCENT = new THREE.Color('#ed0049');
 
 	/** Base star radius — scales with weight */
-	const BASE_RADIUS = 0.04;
-	const WEIGHT_SCALE = 0.03;
+	const BASE_RADIUS = 0.05;
+	const WEIGHT_SCALE = 0.025;
+	const INNER_SCALE = 0.5; // inner circle is 50% of full radius
+	const RING_INNER_GAP = 0.03; // transparent gap between inner and ring
+	const RING_THICKNESS = 0.012; // thin accent ring
 
 	/**
-	 * Build render data: each product gets a star sized by weight,
-	 * plus line segments to its children.
+	 * Build render data: each product gets an inner circle + outer ring,
+	 * sized by weight, colored by product accent.
 	 */
-	const nodes = productNodes.map((pn) => {
+	let time = 0;
+	const SHIMMER_SPEED = 0.8;
+
+	const nodes = productNodes.map((pn, i) => {
 		const product = products.find((p) => p.slug === pn.slug);
-		const isRoot = product && product.parentCorner;
 		const radius = BASE_RADIUS + pn.weight * WEIGHT_SCALE;
+		const accent = product?.accentColor ? new THREE.Color(product.accentColor) : COMPANY_ACCENT;
+		const ringMaterial = new THREE.MeshBasicMaterial({
+			color: accent,
+			transparent: true,
+			opacity: 0.9,
+			side: THREE.DoubleSide,
+			fog: false
+		});
 		return {
 			slug: pn.slug,
 			position: pn.position,
 			radius,
-			isRoot,
-			product
+			accent,
+			product,
+			ringMaterial,
+			phase: i * 0.7
 		};
+	});
+
+	useTask((delta) => {
+		time += delta;
+
+		// Shimmer animation on rings
+		if (!$reducedMotion) {
+			const st = time * SHIMMER_SPEED;
+			for (const node of nodes) {
+				const breath = 0.4 + 0.5 * (0.5 + 0.5 * Math.sin(st + node.phase));
+				node.ringMaterial.opacity = breath;
+			}
+		}
+
+		// Hover-based line highlighting — brighten path, keep others normal
+		const path = $hoveredPath;
+		const hasHover = path.size > 0;
+		for (const line of childLineData) {
+			const isInPath = hasHover && path.has(line.parentSlug) && path.has(line.childSlug);
+			const target = isInPath ? 1.0 : line.baseOpacity;
+			line.material.opacity += (target - line.material.opacity) * Math.min(delta * 8, 1);
+		}
+
+		// Keep bridge lines at normal opacity
+		const bridgeTarget = 0.24;
+		bridgeLineMaterial.opacity += (bridgeTarget - bridgeLineMaterial.opacity) * Math.min(delta * 8, 1);
 	});
 
 	/**
 	 * Collect parent→child line segments.
-	 * These are the mini-constellation connections within product clusters.
 	 */
 	const childLines = [];
 	for (const product of products) {
@@ -42,17 +83,21 @@
 		for (const childSlug of product.children) {
 			const childNode = productNodes.find((n) => n.slug === childSlug);
 			if (childNode) {
+				const childProduct = products.find((p) => p.slug === childSlug);
 				childLines.push({
 					key: `${product.slug}-${childSlug}`,
+					parentSlug: product.slug,
+					childSlug,
 					from: parentNode.position,
-					to: childNode.position
+					to: childNode.position,
+					color: childProduct?.accentColor || product.accentColor || '#ed0049'
 				});
 			}
 		}
 	}
 
 	/**
-	 * Collect bridge line segments (e.g. Arisce → Taledom, Arisce → RuneForge).
+	 * Collect bridge line segments.
 	 */
 	const bridgeLines = [];
 	for (const product of products) {
@@ -82,84 +127,85 @@
 		return geo;
 	}
 
-	const childLineGeos = childLines.map((l) => ({
+	const childLineData = childLines.map((l) => ({
 		key: l.key,
-		geometry: makeLineGeometry(l.from, l.to)
+		parentSlug: l.parentSlug,
+		childSlug: l.childSlug,
+		geometry: makeLineGeometry(l.from, l.to),
+		material: new THREE.LineBasicMaterial({
+			color: new THREE.Color(l.color),
+			transparent: true,
+			opacity: 0.4
+		}),
+		baseOpacity: 0.4
 	}));
-
-	const bridgeLineGeos = bridgeLines.map((l) => ({
-		key: l.key,
-		geometry: makeLineGeometry(l.from, l.to)
-	}));
-
-	const childLineMaterial = new THREE.LineBasicMaterial({
-		color: PRODUCT_COLOR,
-		transparent: true,
-		opacity: 0.15
-	});
 
 	const bridgeLineMaterial = new THREE.LineBasicMaterial({
-		color: ACCENT_COLOR,
+		color: COMPANY_ACCENT,
 		transparent: true,
-		opacity: 0.08
+		opacity: 0.24
 	});
+
+	const bridgeLineData = bridgeLines.map((l) => ({
+		key: l.key,
+		geometry: makeLineGeometry(l.from, l.to)
+	}));
 </script>
 
 <!-- Product star nodes -->
 {#each nodes as node (node.slug)}
-	<!-- Click target -->
+	<!-- Click target (invisible, larger) -->
 	<T.Mesh
+		name={`product:${node.slug}`}
 		position={node.position}
-		onclick={() => toggleNode('product', node.slug, node.product)}
 	>
-		<T.SphereGeometry args={[Math.max(node.radius * 2.5, 0.15), 12, 12]} />
+		<T.SphereGeometry args={[Math.max(node.radius * 1.5, 0.1), 12, 12]} />
 		<T.MeshBasicMaterial visible={false} />
 	</T.Mesh>
 
-	<!-- Main star point -->
+	<!-- Inner circle: company accent (solid core) -->
 	<T.Mesh position={node.position}>
-		<T.SphereGeometry args={[node.radius, 16, 16]} />
+		<T.SphereGeometry args={[node.radius * INNER_SCALE, 16, 16]} />
 		<T.MeshBasicMaterial
-			color={node.isRoot ? ACCENT_COLOR : PRODUCT_COLOR}
-			transparent
-			opacity={node.isRoot ? 0.85 : 0.7}
+			color={COMPANY_ACCENT}
+			fog={false}
+			depthWrite={false}
 		/>
 	</T.Mesh>
 
-	<!-- Subtle glow for root products -->
-	{#if node.isRoot}
-		<T.Mesh position={node.position}>
-			<T.SphereGeometry args={[node.radius * 3, 16, 16]} />
-			<T.MeshBasicMaterial
-				color={ACCENT_COLOR}
-				transparent
-				opacity={0.04}
-			/>
-		</T.Mesh>
-		<T.PointLight
-			position={node.position}
-			color={ACCENT_COLOR}
-			intensity={0.6}
-			distance={2}
-			decay={2}
+	<!-- Outer ring: product custom accent color (breathing shimmer) -->
+	{@const ringInner = node.radius * INNER_SCALE + RING_INNER_GAP}
+	{@const ringOuter = ringInner + RING_THICKNESS}
+	<T.Mesh position={node.position} material={node.ringMaterial}>
+		<T.RingGeometry args={[ringInner, ringOuter, 32]} />
+	</T.Mesh>
+
+	<!-- Glow halo in product accent -->
+	<T.Mesh position={node.position}>
+		<T.SphereGeometry args={[node.radius * 3, 16, 16]} />
+		<T.MeshBasicMaterial
+			color={node.accent}
+			transparent
+			opacity={0.04}
+			depthWrite={false}
 		/>
-	{:else}
-		<T.PointLight
-			position={node.position}
-			color={PRODUCT_COLOR}
-			intensity={0.2}
-			distance={1}
-			decay={2}
-		/>
-	{/if}
+	</T.Mesh>
+
+	<T.PointLight
+		position={node.position}
+		color={node.accent}
+		intensity={0.4}
+		distance={1.5}
+		decay={2}
+	/>
 {/each}
 
-<!-- Parent → Child connection lines (mini-constellation shapes) -->
-{#each childLineGeos as line (line.key)}
-	<T.Line geometry={line.geometry} material={childLineMaterial} />
+<!-- Parent → Child connection lines (colored by product accent) -->
+{#each childLineData as line (line.key)}
+	<T.Line geometry={line.geometry} material={line.material} />
 {/each}
 
 <!-- Bridge connection lines -->
-{#each bridgeLineGeos as line (line.key)}
+{#each bridgeLineData as line (line.key)}
 	<T.Line geometry={line.geometry} material={bridgeLineMaterial} />
 {/each}

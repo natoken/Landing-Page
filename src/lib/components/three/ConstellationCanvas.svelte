@@ -1,6 +1,7 @@
 <script>
 	import { Canvas, T } from '@threlte/core';
 	import { onMount } from 'svelte';
+	import * as THREE from 'three';
 	import StarField from './StarField.svelte';
 	import SixCorners from './SixCorners.svelte';
 	import ConstellationLines from './ConstellationLines.svelte';
@@ -20,7 +21,7 @@
 	});
 </script>
 
-<Canvas>
+<Canvas toneMapping={THREE.NoToneMapping}>
 	<SceneSetup />
 
 	<T.PerspectiveCamera

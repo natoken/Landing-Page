@@ -46,13 +46,16 @@
 			const pingProgress = cycle / PING_INTERVAL;
 
 			if (pingProgress < PING_SPEED) {
+				// Expanding ping
 				const t = pingProgress / PING_SPEED;
-				const scale = 1 + t * 3;
+				const eased = t * t * (3 - 2 * t); // smoothstep
+				const scale = 1 + eased * 2.5;
 				mesh.scale.setScalar(scale);
-				pd.material.opacity = 0.3 * (1 - t);
+				pd.material.opacity = 0.25 * (1 - eased * eased);
 			} else {
-				mesh.scale.setScalar(1);
-				pd.material.opacity = 0.15;
+				// Idle — ping ring invisible (static ring handles base visual)
+				mesh.scale.setScalar(0.01);
+				pd.material.opacity = 0;
 			}
 		}
 	});
@@ -62,10 +65,10 @@
 	{#if pd.node}
 		<!-- Click target (larger invisible sphere) -->
 		<T.Mesh
+			name={`team:${pd.member.slug}`}
 			position={pd.node.position}
-			onclick={() => toggleNode('team', pd.member.slug, pd.member)}
 		>
-			<T.SphereGeometry args={[0.2, 12, 12]} />
+			<T.SphereGeometry args={[0.1, 12, 12]} />
 			<T.MeshBasicMaterial visible={false} />
 		</T.Mesh>
 
@@ -76,12 +79,13 @@
 				color={NODE_COLOR}
 				transparent
 				opacity={0.9}
+				fog={false}
 			/>
 		</T.Mesh>
 
-		<!-- Static ring outline -->
+		<!-- Static ring outline (thin) -->
 		<T.Mesh position={pd.node.position}>
-			<T.RingGeometry args={[0.12, 0.14, 32]} />
+			<T.RingGeometry args={[0.09, 0.10, 32]} />
 			<T.MeshBasicMaterial
 				color={NODE_COLOR}
 				transparent
@@ -90,13 +94,13 @@
 			/>
 		</T.Mesh>
 
-		<!-- Ping ring (animated) -->
+		<!-- Ping ring (animated, thin) -->
 		<T.Mesh
 			bind:ref={pingRefs[pd.member.slug]}
 			position={pd.node.position}
 			material={pd.material}
 		>
-			<T.RingGeometry args={[0.12, 0.14, 32]} />
+			<T.RingGeometry args={[0.09, 0.10, 32]} />
 		</T.Mesh>
 
 		<!-- Subtle glow -->

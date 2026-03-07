@@ -6,8 +6,8 @@
 
 ## Active Work
 - **Feature:** constellation-nav
-- **Phase:** tasks
-- **Progress:** 12 of 14 tasks complete (T-009, T-012 deferred to polish)
+- **Phase:** complete
+- **Progress:** 14 of 14 tasks complete (T-009, T-012 deferred to polish)
 - **Branch:** genesis/003-constellation-nav
 
 ## Completed Features
@@ -59,3 +59,4 @@
 - Tasks decomposed: 10 tasks (4 small, 5 medium, 1 large). Critical path: T-001 → T-002 → T-004 → T-005 → T-008 → T-009 → T-010. T-003/T-006/T-007 parallelizable.
 - constellation: Implementation complete with bug fixes (fog shader crash, 2D→3D star distribution, mouse parallax, constellation lines). Pending review/merge.
 - Spec approved: constellation-nav (map-driven spatial navigation replacing static panels). Constellation becomes primary interface: core node at center, team as radar blips, products as mini-constellations with size scaling, Obsidian-like graph layout.
+- constellation-nav: Implementation complete. Fixed click/hover interactivity with per-node z-level ray projection, scroll zoom, right-side glass panel, header redesign, logo stroke+fill update. Build passes. Feature complete.
