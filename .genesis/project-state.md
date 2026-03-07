@@ -26,11 +26,12 @@
 | mdsvex for blog | Markdown-in-Svelte for Genesis-managed blog posts | 2026-03-07 | Yes |
 | Vanilla CSS only | No CSS frameworks — bespoke design system | 2026-03-07 | Yes |
 | "Constellation Terminal" design | Sci-fi command deck with glass panels in star field | 2026-03-07 | Yes |
+| Lucide Svelte icons | Clean, tree-shakeable icon system | 2026-03-07 | Yes |
 
 ## Constitutional Amendments
 | Amendment | Rationale | Date |
 |-----------|-----------|------|
-| — | — | — |
+| Added Lucide Svelte + JetBrains Mono | Icon system + terminal font | 2026-03-07 |
 
 ## Custom Phases
 | Phase | Description | Last Run |

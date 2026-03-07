@@ -22,6 +22,7 @@ APPROVED_DEPS=(
   "prettier-plugin-svelte"
   "eslint-plugin-svelte"
   "eslint-config-prettier"
+  "lucide-svelte"
 )
 
 # Check if package.json is staged

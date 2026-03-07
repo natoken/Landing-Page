@@ -2,7 +2,7 @@
 
 **Established:** 2026-03-07
 **Mode:** Brownfield
-**Last Amended:** Never
+**Last Amended:** 2026-03-07
 
 ---
 
@@ -31,12 +31,15 @@ Natoken's company site exists to be the boldest, most innovative company landing
 - **Threlte:** ^8.x (@threlte/core + @threlte/extras — Svelte-native Three.js. Powers the 3D constellation star field backdrop and spatial UI depth. The atmosphere engine.)
 - **Three.js:** ^0.170.x (3D rendering, managed through Threlte — never used directly in components)
 - **mdsvex:** ^0.12.x (Markdown-in-Svelte preprocessor — blog posts as `.svx` files with embedded Svelte components)
+- **Lucide Svelte:** `lucide-svelte` (Icon library — clean, consistent, tree-shakeable SVG icons. The icon system.)
 - Beyond these, keep dependencies minimal. Every new dependency requires constitutional justification.
 
 ### Styling
 - **Vanilla CSS** with custom properties (design tokens)
 - **No CSS frameworks** (no Tailwind, no Bootstrap — we write our own)
-- **Font:** Nunito Sans (Google Fonts)
+- **Font:** Nunito Sans (Google Fonts) — primary UI and body font
+- **Mono Font:** JetBrains Mono (Google Fonts) — terminal aesthetic, code blocks, hiring page accents
+- **Icons:** Lucide via `lucide-svelte` — tree-shaken, only imported icons ship in the bundle
 
 ### Brand
 - **Primary accent:** `#ed0049`
@@ -191,7 +194,7 @@ To amend this constitution:
 
 | # | Date | Section | Tier | Change | Rationale |
 |---|------|---------|------|--------|-----------|
-| — | — | — | — | — | — |
+| 1 | 2026-03-07 | 2 (Tech Stack) | Foundational | Added Lucide Svelte as icon system, formalized JetBrains Mono as mono font | Consistent icon library needed; mono font supports terminal aesthetic |
 
 ## 12. Legacy Handling
 
