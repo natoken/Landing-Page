@@ -3,10 +3,10 @@ import { team } from './team.js';
 
 // --- Constants ---
 
-const CORNER_RADIUS = 4;
-const PRODUCT_RADIUS_MULT = 1.35;
-const CHILD_OFFSET = 0.8;
-const TEAM_OFFSET = 0.5;
+const CORNER_RADIUS = 3;
+const PRODUCT_RADIUS_MULT = 1.2;
+const CHILD_OFFSET = 0.55;
+const TEAM_OFFSET = 0.45;
 
 // --- Helpers ---
 
@@ -75,11 +75,11 @@ for (const p of products) {
 
 	if (corner) {
 		// Radiate outward from corner, slight angle offset
-		const angleOffset = p.slug === 'runeforge' ? -5 : 5;
-		position = anglePos(corner.angle + angleOffset, CORNER_RADIUS * PRODUCT_RADIUS_MULT, -0.5);
+		const angleOffset = p.slug === 'runeforge' ? -8 : 8;
+		position = anglePos(corner.angle + angleOffset, CORNER_RADIUS * PRODUCT_RADIUS_MULT, -0.3);
 	} else if (p.type === 'tool') {
 		// Tools float near center-bottom
-		position = [0, -CORNER_RADIUS * 0.6, -0.3];
+		position = [0, -CORNER_RADIUS * 0.55, -0.2];
 	} else {
 		position = [0, 0, -1];
 	}
@@ -94,8 +94,8 @@ for (const p of products) {
 	if (bridged.length >= 2) {
 		const mid = [
 			(bridged[0].position[0] + bridged[1].position[0]) / 2,
-			(bridged[0].position[1] + bridged[1].position[1]) / 2 + 0.4,
-			(bridged[0].position[2] + bridged[1].position[2]) / 2 - 0.3
+			(bridged[0].position[1] + bridged[1].position[1]) / 2 + 0.3,
+			(bridged[0].position[2] + bridged[1].position[2]) / 2 - 0.2
 		];
 		productNodeMap.set(p.slug, { slug: p.slug, position: mid, weight: computeWeight(p.slug) });
 	}
@@ -109,8 +109,13 @@ for (const p of products) {
 
 	const parentProduct = getProduct(p.parent);
 	const childIndex = parentProduct ? parentProduct.children.indexOf(p.slug) : 0;
-	const angle = (childIndex * 60) + 30; // spread children around parent
-	const offset = anglePos(angle, CHILD_OFFSET, -0.2);
+	const childCount = parentProduct ? parentProduct.children.length : 1;
+	// Spread children evenly around parent, radiating outward
+	const spreadAngle = Math.min(100, 360 / Math.max(childCount, 1));
+	const baseAngle = 90; // default outward direction
+	const startAngle = baseAngle - (childCount - 1) * spreadAngle / 2;
+	const angle = startAngle + childIndex * spreadAngle;
+	const offset = anglePos(angle, CHILD_OFFSET, -0.15);
 	const position = [
 		parentNode.position[0] + offset[0],
 		parentNode.position[1] + offset[1],
@@ -159,10 +164,10 @@ export const teamNodes = team.map((member) => {
 		const corner = getCorner(cornerId);
 		if (corner) {
 			// Offset slightly inward from the corner toward center
-			const inwardFactor = 0.7;
+			const inwardFactor = 0.72;
 			position = [
-				corner.position[0] * inwardFactor + (0),
-				corner.position[1] * inwardFactor + (0),
+				corner.position[0] * inwardFactor,
+				corner.position[1] * inwardFactor,
 				0.1
 			];
 		}
@@ -195,7 +200,7 @@ export const edges = [];
 
 // Corner → Core
 for (const c of corners) {
-	edges.push({ from: c.position, to: core.position, type: 'hierarchy', opacity: 0.04 });
+	edges.push({ from: c.position, to: core.position, type: 'hierarchy', opacity: c.filled ? 0.15 : 0.06 });
 }
 
 // Corner → Corner (hexagon outline)
@@ -206,7 +211,7 @@ for (let i = 0; i < corners.length; i++) {
 		from: corners[i].position,
 		to: next.position,
 		type: 'hierarchy',
-		opacity: eitherFilled ? 0.15 : 0.04
+		opacity: eitherFilled ? 0.25 : 0.08
 	});
 }
 
@@ -216,7 +221,7 @@ for (const p of products) {
 	const corner = getCorner(p.parentCorner);
 	const pNode = productNodeMap.get(p.slug);
 	if (corner && pNode) {
-		edges.push({ from: pNode.position, to: corner.position, type: 'product', opacity: 0.12 });
+		edges.push({ from: pNode.position, to: corner.position, type: 'product', opacity: 0.2 });
 	}
 }
 
@@ -226,7 +231,7 @@ for (const p of products) {
 	const parentNode = productNodeMap.get(p.parent);
 	const childNode = productNodeMap.get(p.slug);
 	if (parentNode && childNode) {
-		edges.push({ from: childNode.position, to: parentNode.position, type: 'product', opacity: 0.15 });
+		edges.push({ from: childNode.position, to: parentNode.position, type: 'product', opacity: 0.25 });
 	}
 }
 
@@ -238,7 +243,7 @@ for (const p of products) {
 	for (const bridgeSlug of p.bridges) {
 		const bridgeNode = productNodeMap.get(bridgeSlug);
 		if (bridgeNode) {
-			edges.push({ from: pNode.position, to: bridgeNode.position, type: 'bridge', opacity: 0.08 });
+			edges.push({ from: pNode.position, to: bridgeNode.position, type: 'bridge', opacity: 0.15 });
 		}
 	}
 }
@@ -251,13 +256,13 @@ for (const tn of teamNodes) {
 	if (member.domain === 'product' && member.product) {
 		const prodNode = productNodeMap.get(member.product);
 		if (prodNode) {
-			edges.push({ from: tn.position, to: prodNode.position, type: 'team', opacity: 0.06 });
+			edges.push({ from: tn.position, to: prodNode.position, type: 'team', opacity: 0.12 });
 		}
 	} else {
 		const cornerId = member.nearCorner || member.domain;
 		const corner = getCorner(cornerId);
 		if (corner) {
-			edges.push({ from: tn.position, to: corner.position, type: 'team', opacity: 0.06 });
+			edges.push({ from: tn.position, to: corner.position, type: 'team', opacity: 0.12 });
 		}
 	}
 }

@@ -12,7 +12,7 @@
 <Canvas>
 	<T.PerspectiveCamera
 		makeDefault
-		position={[0, 0, 9]}
+		position={[0, 0, 7.5]}
 		fov={65}
 		near={0.1}
 		far={60}
@@ -22,7 +22,7 @@
 
 	<T.Fog
 		attach="fog"
-		args={['#0d1117', 12, 30]}
+		args={['#0d1117', 14, 35]}
 	/>
 
 	<StarField />
