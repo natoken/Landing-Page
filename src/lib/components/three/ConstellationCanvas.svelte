@@ -8,6 +8,7 @@
 	import TeamNodes from './TeamNodes.svelte';
 	import ProductConstellations from './ProductConstellations.svelte';
 	import CameraController from './CameraController.svelte';
+	import SceneSetup from './SceneSetup.svelte';
 	import { clearSelection } from '$lib/stores/selectedNode.js';
 
 	onMount(() => {
@@ -20,6 +21,8 @@
 </script>
 
 <Canvas>
+	<SceneSetup />
+
 	<T.PerspectiveCamera
 		makeDefault
 		position={[0, 0, 7.5]}

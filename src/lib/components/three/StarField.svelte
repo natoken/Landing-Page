@@ -74,11 +74,14 @@
 
 				// Tight bright core + wider soft glow
 				float core = exp(-dist * dist * 12.0);
-				float glow = exp(-dist * dist * 2.5) * 0.35;
-				float outerGlow = exp(-dist * dist * 0.8) * 0.08;
-				float alpha = (core + glow + outerGlow) * vOpacity;
+				float glow = exp(-dist * dist * 3.5) * 0.35;
+				float outerGlow = exp(-dist * dist * 1.8) * 0.06;
 
-				if (alpha < 0.005) discard;
+				// Smooth edge fade to prevent square cutoff
+				float edgeFade = 1.0 - smoothstep(0.7, 1.0, dist);
+				float alpha = (core + glow + outerGlow) * vOpacity * edgeFade;
+
+				if (alpha < 0.003) discard;
 
 				// Color temperature: cool blue → white → warm gold
 				vec3 coolColor = vec3(0.7, 0.8, 1.0);
