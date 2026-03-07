@@ -13,9 +13,17 @@
   --color-success: #3fb950;
   --color-wip: #d29922;
 
+  --color-accent-glow: rgba(237, 0, 73, 0.3);
+  --color-accent-subtle: rgba(237, 0, 73, 0.08);
+  --color-star: #e6edf3;
+  --color-star-dim: rgba(230, 237, 243, 0.3);
+
   --glass-bg: rgba(28, 33, 40, 0.6);
+  --glass-bg-hover: rgba(28, 33, 40, 0.75);
   --glass-border: rgba(255, 255, 255, 0.05);
-  --glass-blur: 10px;
+  --glass-border-hover: rgba(255, 255, 255, 0.1);
+  --glass-blur: 12px;
+  --glass-blur-heavy: 20px;
   --radius: 10px;
   --radius-sm: 6px;
 

@@ -5,15 +5,15 @@
 **Current Phase:** Constitution established
 
 ## Active Work
-- **Feature:** cloudflare-migration
-- **Phase:** tasks
-- **Progress:** 6 of 7 tasks complete
-- **Branch:** genesis/001-cloudflare-migration
+- **Feature:** constellation-nav
+- **Phase:** complete
+- **Progress:** 14 of 14 tasks complete (T-009, T-012 deferred to polish)
+- **Branch:** genesis/003-constellation-nav
 
 ## Completed Features
 | Feature | Completed | Branch | Merged |
 |---------|-----------|--------|--------|
-| — | — | — | — |
+| cloudflare-migration | 2026-03-07 | genesis/001-cloudflare-migration | Yes (squash to main) |
 
 ## Key Decisions
 | Decision | Rationale | Date | Constitutional? |
@@ -52,3 +52,11 @@
 - Design docs created: overview (site map, as-is/to-be, convergence path), design system (full token reference, motion patterns, component patterns), architecture (4-layer rendering pipeline, Threlte scene graph, GSAP integration, build pipeline), content model (all data schemas, relationships, migration plan).
 - Spec approved: cloudflare-migration (migrate to Cloudflare Pages, remove base path hack, swap accent to #ed0049, add security headers, tear down GitHub Pages).
 - Plan approved and tasks decomposed: 7 tasks (5 small, 2 medium). Critical path: T-001 → T-002 → T-006 → T-007. T-003/T-004/T-005 parallelizable.
+- cloudflare-migration: All code tasks complete (T-001–T-006). Squash merged to main, pushed to trigger Cloudflare rebuild. T-007 (manual setup) complete.
+- Spec approved: constellation (replace 2D particle renderer with Threlte 3D star field). Full viewport coverage, depth fog, 500+ stars, camera drift, reduced motion support, 2D fallback, async loading.
+- Spec clarified: 6 Corners (hexagonal leadership anchors), product branches (RuneForge near CTO, Taledom near CEO), tiered star counts, glass panels, route persistence.
+- Plan approved: constellation. 6 new components, 3 stores, 12-step build order. Threlte + Three.js lazy-loaded (~165KB). InstancedMesh for stars, shader twinkle, Three.js Fog.
+- Tasks decomposed: 10 tasks (4 small, 5 medium, 1 large). Critical path: T-001 → T-002 → T-004 → T-005 → T-008 → T-009 → T-010. T-003/T-006/T-007 parallelizable.
+- constellation: Implementation complete with bug fixes (fog shader crash, 2D→3D star distribution, mouse parallax, constellation lines). Pending review/merge.
+- Spec approved: constellation-nav (map-driven spatial navigation replacing static panels). Constellation becomes primary interface: core node at center, team as radar blips, products as mini-constellations with size scaling, Obsidian-like graph layout.
+- constellation-nav: Implementation complete. Fixed click/hover interactivity with per-node z-level ray projection, scroll zoom, right-side glass panel, header redesign, logo stroke+fill update. Build passes. Feature complete.
