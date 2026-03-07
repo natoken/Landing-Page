@@ -2,28 +2,28 @@
 	import { Canvas, T } from '@threlte/core';
 	import StarField from './StarField.svelte';
 	import SixCorners from './SixCorners.svelte';
-	import ProductBranches from './ProductBranches.svelte';
+	import ConstellationLines from './ConstellationLines.svelte';
 	import CameraController from './CameraController.svelte';
 </script>
 
 <Canvas>
 	<T.PerspectiveCamera
 		makeDefault
-		position={[0, 0, 6]}
-		fov={60}
+		position={[0, 0, 9]}
+		fov={65}
 		near={0.1}
-		far={50}
+		far={60}
 	/>
 
-	<T.AmbientLight intensity={0.1} />
+	<T.AmbientLight intensity={0.15} />
 
 	<T.Fog
 		attach="fog"
-		args={['#0d1117', 8, 18]}
+		args={['#0d1117', 12, 30]}
 	/>
 
 	<StarField />
+	<ConstellationLines />
 	<SixCorners />
-	<ProductBranches />
 	<CameraController />
 </Canvas>
