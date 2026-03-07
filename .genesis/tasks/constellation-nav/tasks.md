@@ -13,7 +13,7 @@
 - **Total Tasks:** 14
 - **Complexity:** 5 Small, 7 Medium, 2 Large (split into phases)
 - **Critical Path:** T-001 → T-002 → T-005 → T-006 → T-007 → T-009 → T-010 → T-011 → T-014
-- **Progress:** 9 of 14 complete
+- **Progress:** 12 of 14 complete
 
 ## Dependency Graph
 
@@ -334,7 +334,7 @@ When a node is selected and a panel is open, dim the constellation (reduce star 
 
 ### T-009: Build ConstellationOverlay for hover labels and hints
 
-**Status:** Pending
+**Status:** Pending (deferred to polish)
 **Complexity:** Medium
 **Dependencies:** T-007
 **Parallel:** —
@@ -400,7 +400,7 @@ Remove the 3-panel grid layout, mobile header, and all old panel components from
 
 ### T-011: Build MobileContentDrawer and MobileNavBar
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Medium
 **Dependencies:** T-010
 **Parallel:** —
@@ -467,7 +467,7 @@ Make the constellation keyboard-navigable. Tab cycles through interactive nodes,
 
 ### T-013: Fix pointer events and camera interaction
 
-**Status:** Pending
+**Status:** Complete
 **Complexity:** Small
 **Dependencies:** T-010
 **Parallel:** [P] — can run in parallel with T-012

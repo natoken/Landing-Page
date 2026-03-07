@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import * as THREE from 'three';
 	import { reducedMotion } from '$lib/stores/motion.js';
+	import { selectedNode } from '$lib/stores/selectedNode.js';
 
 	const { camera } = useThrelte();
 
@@ -36,7 +37,7 @@
 		currentX = THREE.MathUtils.lerp(currentX, targetX, delta * LERP_SPEED);
 		currentY = THREE.MathUtils.lerp(currentY, targetY, delta * LERP_SPEED);
 
-		if (!$reducedMotion) {
+		if (!$reducedMotion && !$selectedNode) {
 			time += delta * DRIFT_SPEED;
 		}
 

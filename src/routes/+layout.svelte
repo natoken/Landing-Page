@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import NatokenLogo from '$lib/components/NatokenLogo.svelte';
   import NodeInfoPanel from '$lib/components/NodeInfoPanel.svelte';
+  import MobileNavBar from '$lib/components/MobileNavBar.svelte';
 
   let { children } = $props();
 
@@ -39,6 +40,7 @@
 </div>
 
 <NodeInfoPanel />
+<MobileNavBar />
 
 <style>
   .layout {
