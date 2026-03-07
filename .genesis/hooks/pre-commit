@@ -1,0 +1,71 @@
+#!/bin/bash
+# Genesis pre-commit hook
+# Checks for unconstitutional dependencies and common violations
+
+# Constitutional dependencies (Section 2)
+APPROVED_DEPS=(
+  "@sveltejs/adapter-static"
+  "@sveltejs/kit"
+  "@sveltejs/vite-plugin-svelte"
+  "svelte"
+  "vite"
+  "gsap"
+  "@gsap/shockingly"
+  "@threlte/core"
+  "@threlte/extras"
+  "@threlte/flex"
+  "three"
+  "@types/three"
+  "mdsvex"
+  "eslint"
+  "prettier"
+  "prettier-plugin-svelte"
+  "eslint-plugin-svelte"
+  "eslint-config-prettier"
+)
+
+# Check if package.json is staged
+if git diff --cached --name-only | grep -q "package.json"; then
+  # Get newly added dependencies
+  staged_pkg=$(git show :package.json 2>/dev/null)
+  if [ -n "$staged_pkg" ]; then
+    # Extract all dependency names from staged package.json
+    deps=$(echo "$staged_pkg" | grep -oE '"[^"]+":' | grep -v '"name"\|"version"\|"private"\|"type"\|"scripts"\|"devDependencies"\|"dependencies"\|"dev"\|"build"\|"preview"\|"lint"\|"format"\|"check"' | tr -d '":')
+
+    for dep in $deps; do
+      approved=false
+      for allowed in "${APPROVED_DEPS[@]}"; do
+        if [ "$dep" = "$allowed" ]; then
+          approved=true
+          break
+        fi
+      done
+      if [ "$approved" = false ] && [ -n "$dep" ]; then
+        echo ""
+        echo "COMMIT BLOCKED — Unconstitutional dependency detected: $dep"
+        echo ""
+        echo "This dependency is not in the approved tech stack (Constitution Section 2)."
+        echo "To add it, run /genesis:amend to formally amend the constitution first."
+        echo ""
+        exit 1
+      fi
+    done
+  fi
+fi
+
+# Check for hardcoded brand colors (old blue accent)
+if git diff --cached -- '*.svelte' '*.css' '*.js' | grep -qiE '#2563eb|#3b82f6'; then
+  echo ""
+  echo "WARNING — Old blue accent color detected (#2563eb/#3b82f6)"
+  echo "Constitutional brand color is #ed0049 (Constitution Section 2, Brand)"
+  echo ""
+fi
+
+# Check for .env files being committed
+if git diff --cached --name-only | grep -qE "^\.env$|^\.env\."; then
+  echo ""
+  echo "COMMIT BLOCKED — .env file staged for commit"
+  echo "Secrets must never be committed (Constitution Section 7)"
+  echo ""
+  exit 1
+fi

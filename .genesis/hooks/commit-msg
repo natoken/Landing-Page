@@ -1,0 +1,31 @@
+#!/bin/bash
+# Genesis commit-msg hook
+# Validates commit messages match constitutional format: type(scope): description
+# Types: feat, fix, style, refactor, chore, docs, genesis
+
+commit_msg=$(cat "$1")
+
+# Allow merge commits
+if echo "$commit_msg" | grep -qE "^Merge "; then
+  exit 0
+fi
+
+# Validate format: type(scope): description  OR  type: description
+if ! echo "$commit_msg" | head -1 | grep -qE "^(feat|fix|style|refactor|chore|docs|genesis)(\([a-zA-Z0-9_-]+\))?: .+"; then
+  echo ""
+  echo "COMMIT REJECTED — Constitutional violation (Section 10)"
+  echo ""
+  echo "Commit message must match: type(scope): description"
+  echo ""
+  echo "  Types:  feat, fix, style, refactor, chore, docs, genesis"
+  echo "  Scope:  optional, lowercase (e.g., products, mobile, blog)"
+  echo ""
+  echo "  Examples:"
+  echo "    feat(products): add rich product showcase"
+  echo "    fix(mobile): panel switching flicker"
+  echo "    genesis: complete project discovery"
+  echo ""
+  echo "Your message: $(head -1 "$1")"
+  echo ""
+  exit 1
+fi

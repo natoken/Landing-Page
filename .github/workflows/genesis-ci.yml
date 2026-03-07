@@ -1,0 +1,82 @@
+name: Genesis CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Constitutional Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate commit messages
+        run: |
+          commits=$(git log origin/main..HEAD --format='%s')
+          pattern='^(feat|fix|style|refactor|chore|docs|genesis)(\([a-zA-Z0-9_-]+\))?: .+'
+          failed=0
+          while IFS= read -r msg; do
+            if [ -z "$msg" ]; then continue; fi
+            if ! echo "$msg" | grep -qE "$pattern"; then
+              echo "FAIL: $msg"
+              failed=1
+            else
+              echo "OK:   $msg"
+            fi
+          done <<< "$commits"
+          if [ "$failed" -eq 1 ]; then
+            echo ""
+            echo "Commit messages must match: type(scope): description"
+            echo "Types: feat, fix, style, refactor, chore, docs, genesis"
+            exit 1
+          fi
+
+      - name: Check for unconstitutional dependencies
+        run: |
+          approved='@sveltejs/adapter-static @sveltejs/kit @sveltejs/vite-plugin-svelte svelte vite gsap @gsap/shockingly @threlte/core @threlte/extras @threlte/flex three @types/three mdsvex eslint prettier prettier-plugin-svelte eslint-plugin-svelte eslint-config-prettier'
+          deps=$(node -e "
+            const pkg = require('./package.json');
+            const all = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.devDependencies || {})];
+            console.log(all.join('\n'));
+          ")
+          failed=0
+          while IFS= read -r dep; do
+            if [ -z "$dep" ]; then continue; fi
+            if ! echo "$approved" | grep -qw "$dep"; then
+              echo "UNCONSTITUTIONAL: $dep"
+              failed=1
+            fi
+          done <<< "$deps"
+          if [ "$failed" -eq 1 ]; then
+            echo ""
+            echo "Unapproved dependencies found. Amend the constitution first."
+            exit 1
+          fi
+
+      - name: Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Check bundle size
+        run: |
+          max_kb=350
+          total=$(find build -type f \( -name '*.js' -o -name '*.css' \) -exec wc -c {} + | tail -1 | awk '{print $1}')
+          total_kb=$((total / 1024))
+          echo "Total JS+CSS: ${total_kb}KB (uncompressed)"
+          if [ "$total_kb" -gt "$((max_kb * 3))" ]; then
+            echo "WARNING: Bundle may exceed ${max_kb}KB gzipped limit"
+          fi
